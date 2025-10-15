@@ -1,0 +1,39 @@
+{% extends "cars/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row g-5">
+        <div class="col-md-5 text-center">
+            <h2 class="fw-bold">{{ car.car_name }}</h2>
+            {% if car.car_img %}
+            <img src="{{ car.car_img.url }}" alt="{{ car.car_name }}" class="img-fluid rounded shadow mt-3"
+                style="max-height: 350px; object-fit: cover;">
+            {% else %}
+            <img src="{% static 'default_car.jpg' %}" alt="Car Image" class="img-fluid rounded shadow mt-3"
+                style="max-height: 350px; object-fit: cover;">
+            {% endif %}
+        </div>
+
+        <div class="col-md-7">
+            <h3 class="mb-3">Car Details</h3>
+            <ul class="list-group list-group-flush shadow-sm">
+                <li class="list-group-item"><strong>Company:</strong> {{ car.company }}</li>
+                <li class="list-group-item"><strong>Color:</strong> {{ car.color }}</li>
+                <li class="list-group-item"><strong>Fuel Type:</strong> {{ car.fuel_type }}</li>
+                <li class="list-group-item"><strong>Transmission:</strong> {{ car.transmission_type }}</li>
+                <li class="list-group-item"><strong>Seating Capacity:</strong> {{ car.seat_capacity }}</li>
+                <li class="list-group-item"><strong>Total Km Driven:</strong> {{ car.total_km_driven }} km</li>
+                <li class="list-group-item"><strong>Boot Space:</strong> {{ car.bootspace }} L</li>
+                <li class="list-group-item"><strong>Amenities:</strong> {{ car.amenities }}</li>
+                <li class="list-group-item"><strong>Rating:</strong> ⭐ {{ car.rating }}</li>
+            </ul>
+
+            <div class="mt-4 d-flex gap-3">
+                <a href="{% url 'rent_now' car.id %}" class="btn btn-success btn-lg">🚗 Rent Now</a>
+                <a href="{% url 'rental_list' car.seat_capacity %}" class="btn btn-secondary btn-lg">⬅ Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

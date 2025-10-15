@@ -1,0 +1,20 @@
+{% extends 'cars/base.html'  %}
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Calculate your Emi...</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-info" value="Calculate">
+        </form>
+        {% if emi %}
+
+        <h4>Your EMI : ₹{{ emi|floatformat:2}}</h4>
+        <p>Interest Rate: {{ interest_rate }}%</p>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

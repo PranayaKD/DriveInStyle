@@ -1,0 +1,38 @@
+{% extends "cars/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold">Rent Now - {{ car.car_name }}</h2>
+    <form method="post" action="{% url 'calculate_rent' car.id %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Car Name</label>
+            <input type="text" class="form-control" value="{{ car.car_name }}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Total KM Driven</label>
+            <input type="text" class="form-control" value="{{ car.total_km_driven }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Fuel Type</label>
+            <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Seating Capacity</label>
+            <input type="text" class="form-control" value="{{ car.seat_capacity }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Total No. of Days</label>
+            <input type="number" name="days" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Expected KM (Optional)</label>
+            <input type="number" name="expected_km" class="form-control" placeholder="Leave blank for auto-calc">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+</div>
+{% endblock %}

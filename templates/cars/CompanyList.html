@@ -1,0 +1,47 @@
+{% extends 'navbar.html' %} {% block content %}
+
+<div class="container mt-4">
+  <div class="jumbotron shadow-sm p-4">
+    <h1 class="mb-4 text-center">Company List</h1>
+    <div class="row">
+      {% for comp in comp_name %}
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card h-100 shadow-lg border-0 rounded">
+          {% if comp.logo %}
+          <img
+            src="{{ comp.logo.url }}"
+            class="card-img-top img-fluid p-3"
+            alt="{{ comp.name }} Logo"
+            style="max-height: 220px; object-fit: contain"
+          />
+          {% endif %}
+          <div class="card-body text-center">
+            <!-- Company name as anchor -->
+            <h5 class="card-title">
+              <a
+                href="{% url 'company_details' comp.id %}"
+                class="text-decoration-none text-primary"
+              >
+                {{ comp.name }}
+              </a>
+            </h5>
+            <p class="card-text text-muted mb-2">
+              <strong>CEO:</strong> {{ comp.ceo }}
+            </p>
+          </div>
+          <div class="card-footer text-center bg-light">
+            <a
+              href="{% url 'company_details' comp.id %}"
+              class="btn btn-outline-primary btn-sm"
+            >
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

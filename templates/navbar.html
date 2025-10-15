@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drive In Style</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
+
+  <style>
+    /* Make footer stick at bottom */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex: 1; /* pushes footer down */
+    }
+
+    /* Navbar Gradient */
+    .navbar {
+      background: linear-gradient(90deg, #1e1e2f, #0d6efd);
+    }
+    .navbar .nav-link {
+      color: #f8f9fa;
+      font-weight: 500;
+    }
+    .navbar .nav-link:hover {
+      color: #00ff99;
+    }
+    .navbar .btn {
+      font-weight: 600;
+    }
+
+    /* Footer styling */
+    footer {
+      background: #212529;
+      color: #ccc;
+      padding: 20px 0;
+    }
+    footer a {
+      color: #f8f9fa;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <i class="bi bi-car-front me-2"></i> Drive In Style
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          {% if user.is_authenticated %}
+          <li class="nav-item mx-2">
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="{% url 'company' %}" class="nav-link">Company</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="{% url 'logout' %}" class="btn btn-outline-light px-3 rounded-pill">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item mx-2">
+            <a href="{% url 'register' %}" class="btn btn-light text-dark px-3 rounded-pill">Register</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="{% url 'login' %}" class="btn btn-warning px-3 rounded-pill">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="container my-5">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-1">© 2025 Drive In Style. All Rights Reserved.</p>
+      <p>
+        <a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="#">Support</a>
+      </p>
+      <div>
+        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="me-3"><i class="bi bi-twitter"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

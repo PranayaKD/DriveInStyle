@@ -1,0 +1,59 @@
+{% extends 'navbar.html' %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="card card-body">
+      {% if registered %}
+      <div class="card card-body">
+        <h1>Thank you for Registeration</h1>
+        <p>please proceed to <a href="/login/"> login</a></p>
+      </div>
+
+      {% else %}
+      <h1 style="text-align: center">Registeration Form</h1>
+      <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6">
+            {{ form.username | as_crispy_field}} <br />
+          </div>
+          <div class="col-md-6">{{ form.email | as_crispy_field}} <br /></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">{{ form1.phone | as_crispy_field}} <br /></div>
+          <div class="col-md-6">
+            {{ form1.door_no | as_crispy_field}} <br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">{{ form1.street | as_crispy_field}} <br /></div>
+          <div class="col-md-6">
+            {{ form1.landmark | as_crispy_field}} <br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">{{ form1.city | as_crispy_field}} <br /></div>
+          <div class="col-md-6">{{ form1.state | as_crispy_field}} <br /></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            {{ form1.pincode | as_crispy_field}} <br />
+          </div>
+          <div class="col-md-6">
+            {{ form.password | as_crispy_field}} <br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {{ form1.userpic | as_crispy_field}} <br />
+          </div>
+        </div>
+        {{ form1.captcha }}
+        <input type="submit" value="REGISTER" />
+      </form>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

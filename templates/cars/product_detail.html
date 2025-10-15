@@ -1,0 +1,75 @@
+{% extends "cars/base.html" %} {% block content %}
+
+<div class="container mt-4">
+  <div class="jumbotron">
+    <div class="row align-items-start g-5">
+      <!-- Left side: product image + name -->
+      <div class="col-md-5 text-center">
+        <h1>{{ product.product_name }}</h1>
+        {% if product.prod_image %}
+        <img src="{{ product.prod_image.url }}" alt="{{ product.product_name }}" class="img-fluid rounded shadow mt-3"
+          style="max-height: 350px" />
+        {% endif %}
+      </div>
+
+      <!-- Right side: product details -->
+      <div class="col-md-6">
+        <h3>Details</h3>
+        <ul>
+          <li><strong>Color:</strong> {{ product.color }}</li>
+          <li><strong>Fuel Type:</strong> {{ product.fuel_type }}</li>
+          <li><strong>Seat Capacity:</strong> {{ product.seat_capacity }}</li>
+          <li><strong>Mileage:</strong> {{ product.milige }}</li>
+          <li><strong>CC:</strong> {{ product.cc }}</li>
+          <li><strong>Price:</strong> ₹{{ product.price }}</li>
+          <li><strong>Company:</strong> {{ product.Company.name }}</li>
+        </ul>
+
+        <!-- EMI Button -->
+        <a href="{% url 'calcemi' id=product.id %}" class="btn btn-primary mt-3">
+          Check EMI
+        </a>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Interior Images -->
+    <h3>Interior Images</h3>
+    <div class="row">
+      {% for img in interior_images %}
+      <div class="col-md-4 col-sm-6 mb-3">
+        <img src="{{ img.interior.url }}" class="img-fluid rounded shadow" />
+      </div>
+      {% empty %}
+      <p>No interior images available.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Exterior Images -->
+    <h3>Exterior Images</h3>
+    <div class="row">
+      {% for img in exterior_images %}
+      <div class="col-md-4 col-sm-6 mb-3">
+        <img src="{{ img.exterior.url }}" class="img-fluid rounded shadow" />
+      </div>
+      {% empty %}
+      <p>No exterior images available.</p>
+      {% endfor %}
+    </div>
+    <br><br><br><br><br>
+    <div class="card-footer text-center bg-light">
+      <a href="{% url 'product_final_price' id=product.id %}
+" class="btn btn-outline-primary btn-sm">
+        Final Price
+      </a>
+      <a href="{% url 'book_test_drive' id=product.id %}" class="btn btn-outline-primary btn-sm">
+        Book a Test Drive
+      </a>
+      <a href="#" class="btn btn-outline-primary btn-sm"> Make an enquiry </a>
+
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

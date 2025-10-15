@@ -1,0 +1,43 @@
+{% extends "cars/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold">Final Price Checkout</h2>
+    <form method="post" action="{% url 'final_rent_price' car.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Car Name</label>
+            <input type="text" class="form-control" value="{{ car.car_name }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Fuel Type</label>
+            <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Total KM Driven</label>
+            <input type="text" class="form-control" value="{{ car.total_km_driven }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">No. of Days</label>
+            <input type="number" name="days" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">KM Driven Till Now</label>
+            <input type="number" name="exp_km" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate Final Price</button>
+    </form>
+    {% if final_price is not None %}
+    <div class="alert alert-success mt-4">
+        <ul class="list-group">
+            <li class="list-group-item"><strong>No. of Days:</strong> {{ days }}</li>
+            <li class="list-group-item"><strong>Total KM Driven (Now - Before):</strong> {{ total_km }}</li>
+            <li class="list-group-item"><strong>Price Per KM:</strong> ₹{{ rate }}</li>
+            <li class="list-group-item"><strong>Accumulated Price:</strong> ₹{{ accumulated_price|floatformat:2 }}</li>
+            <li class="list-group-item"><strong>Fuel Price:</strong> ₹{{ fuel_price|floatformat:2 }}</li>
+            <li class="list-group-item"><strong>Final Price:</strong> <b>₹{{ final_price|floatformat:2 }}</b></li>
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

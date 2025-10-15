@@ -1,0 +1,22 @@
+{% extends 'navbar.html' %} {% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <div class="card card-body">
+      <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <label for="username">username</label>
+        <input type="text" name="username" placeholder="Enter Username" />
+
+        <br><br>
+        <label for="password">password</label>
+        <input type="password" name="password" placeholder="Enter password" />
+        <br><br>
+        <a href="{% url 'passwordreset' %}"> Forgot password</a>
+        <br><br>
+        <input type="submit" class="btn btn-success" value="LOGIN" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

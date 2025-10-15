@@ -1,0 +1,75 @@
+{% extends "cars/base.html" %}
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+
+    <!-- Company Details -->
+    <div class="row align-items-center mb-4">
+      <!-- Left side: details -->
+      <div class="col-md-6">
+        <h1>{{ company.name }} Company Details</h1>
+        <p><strong>CEO:</strong> {{ company.ceo }}</p>
+        <p><strong>Established Year:</strong> {{ company.est_year }}</p>
+        <p><strong>Origin:</strong> {{ company.origin }}</p>
+      </div>
+      <!-- Right side: logo -->
+      <div class="col-md-6 text-center">
+        {% if company.logo %}
+          <img src="{{ company.logo.url }}" 
+               alt="{{ company.name }} Logo" 
+               class="img-fluid rounded shadow" 
+               style="max-height:180px;">
+        {% endif %}
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Product List -->
+    <h2>List of {{ company.name }} Products</h2>
+    <div class="row">
+      {% for prod in company.companies.all %}
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card shadow-sm">
+
+          <!-- Product Image as link -->
+          {% if prod.prod_image %}
+          <a href="{% url 'product_detail' prod.id %}">
+            <img src="{{ prod.prod_image.url }}" 
+                 class="card-img-top" 
+                 alt="{{ prod.product_name }}" 
+                 height="200px">
+          </a>
+          {% endif %}
+
+          <div class="card-body">
+            <!-- Product Name as link -->
+            <h5 class="card-title">
+              <a href="{% url 'product_detail' prod.id %}" class="text-decoration-none">
+                {{ prod.product_name }}
+              </a>
+            </h5>
+
+            <p class="card-text"><strong>Color:</strong> {{ prod.color }}</p>
+            <p class="card-text"><strong>Fuel Type:</strong> {{ prod.fuel_type }}</p>
+            <p class="card-text"><strong>Seat Capacity:</strong> {{ prod.seat_capacity }}</p>
+            <p class="card-text"><strong>Mileage:</strong> {{ prod.milige }}</p>
+            <p class="card-text"><strong>CC:</strong> {{ prod.cc }}</p>
+            <p class="card-text"><strong>Price:</strong> ₹{{ prod.price }}</p>
+            <p class="card-text"><strong>Company:</strong> {{ prod.Company.name }}</p>
+
+            <!-- Example EMI page link -->
+            <a href="{% url 'calcemi' id=prod.id %}" class="btn btn-primary btn-sm">
+              Check EMI
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

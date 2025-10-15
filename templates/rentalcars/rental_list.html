@@ -1,0 +1,56 @@
+{% extends "cars/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold text-center mb-4">
+        🚘 Available {{ seat_capacity }}-Seater Cars
+    </h2>
+
+    <div class="mb-4 text-start">
+        <a href="{% url 'rental_home' %}" class="btn btn-secondary">
+            ⬅ Back
+        </a>
+    </div>
+
+    {% if cars %}
+    <div class="row g-4">
+        {% for car in cars %}
+        <div class="col-md-4">
+            <div class="card shadow-lg h-100">
+                {% if car.car_img %}
+                <img src="{{ car.car_img.url }}" class="card-img-top" alt="{{ car.car_name }}"
+                    style="height: 250px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'default_car.jpg' %}" class="card-img-top" alt="Default Car"
+                    style="height: 250px; object-fit: cover;">
+                {% endif %}
+
+                <div class="card-body">
+                    <a  style="text-decoration: none;" href="{% url 'rental_details' car.id %}"><h5 class="card-title">{{ car.car_name }}</h5></a>
+                    
+                    <p class="card-text">
+                        <strong>Company:</strong> {{ car.company }} <br>
+                        <strong>Driven:</strong> {{ car.total_km_driven }} km <br>
+                        <strong>Fuel:</strong> {{ car.fuel_type }} <br>
+                        <strong>Transmission:</strong> {{ car.transmission_type }}
+                    </p>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <a href="{% url 'rental_details' car.id %}" class="btn btn-outline-primary btn-sm">
+                        View Details
+                    </a>
+                    <span class="badge bg-warning text-dark">
+                        ⭐ {{ car.rating }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-muted mt-4">No {{ seat_capacity }}-seater cars available right now.</p>
+    {% endif %}
+</div>
+{% endblock %}
