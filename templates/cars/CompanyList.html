@@ -1,46 +1,57 @@
-{% extends 'navbar.html' %} {% block content %}
+{% extends 'navbar.html' %}
+{% block content %}
 
-<div class="container mt-4">
-  <div class="jumbotron shadow-sm p-4">
-    <h1 class="mb-4 text-center">Company List</h1>
-    <div class="row">
-      {% for comp in comp_name %}
-      <div class="col-md-4 col-sm-6 mb-4">
-        <div class="card h-100 shadow-lg border-0 rounded">
+<div class="container">
+  <!-- Page Header -->
+  <div class="text-center mb-5">
+    <h1 class="hero-title mb-3" style="font-size: 2.5rem;">
+      <i class="bi bi-building text-info me-2"></i>Browse Companies
+    </h1>
+    <p style="color: var(--color-gray-400);">
+      Select a company to explore their premium vehicle collection
+    </p>
+  </div>
+
+  <!-- Company Grid -->
+  <div class="row g-4">
+    {% for comp in comp_name %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card-modern h-100">
+        <!-- Company Logo -->
+        <div class="card-header text-center"
+          style="min-height: 180px; display: flex; align-items: center; justify-content: center;">
           {% if comp.logo %}
-          <img
-            src="{{ comp.logo.url }}"
-            class="card-img-top img-fluid p-3"
-            alt="{{ comp.name }} Logo"
-            style="max-height: 220px; object-fit: contain"
-          />
+          <img src="{{ comp.logo.url }}" class="img-fluid" alt="{{ comp.name }} Logo"
+            style="max-height: 140px; object-fit: contain" />
+          {% else %}
+          <i class="bi bi-building" style="font-size: 4rem; color: var(--color-accent-cyan);"></i>
           {% endif %}
-          <div class="card-body text-center">
-            <!-- Company name as anchor -->
-            <h5 class="card-title">
-              <a
-                href="{% url 'company_details' comp.id %}"
-                class="text-decoration-none text-primary"
-              >
-                {{ comp.name }}
-              </a>
-            </h5>
-            <p class="card-text text-muted mb-2">
-              <strong>CEO:</strong> {{ comp.ceo }}
-            </p>
-          </div>
-          <div class="card-footer text-center bg-light">
-            <a
-              href="{% url 'company_details' comp.id %}"
-              class="btn btn-outline-primary btn-sm"
-            >
-              View Details
-            </a>
-          </div>
+        </div>
+
+        <!-- Company Info -->
+        <div class="card-body text-center">
+          <h5 style="color: var(--color-white); font-weight: 600; margin-bottom: 0.5rem;">
+            {{ comp.name }}
+          </h5>
+          <p style="color: var(--color-gray-400); margin-bottom: 0; font-size: 0.9rem;">
+            <i class="bi bi-person-badge me-1"></i>CEO: {{ comp.ceo }}
+          </p>
+        </div>
+
+        <!-- Action Button -->
+        <div class="p-3 text-center" style="border-top: 1px solid var(--glass-border);">
+          <a href="{% url 'company_details' comp.id %}" class="btn btn-gradient-primary btn-modern w-100">
+            <i class="bi bi-arrow-right-circle me-1"></i>View Details
+          </a>
         </div>
       </div>
-      {% endfor %}
     </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+      <i class="bi bi-inbox" style="font-size: 4rem; color: var(--color-gray-500);"></i>
+      <p class="mt-3" style="color: var(--color-gray-400);">No companies available at the moment.</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 

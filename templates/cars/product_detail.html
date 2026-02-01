@@ -1,75 +1,147 @@
-{% extends "cars/base.html" %} {% block content %}
+{% extends "navbar.html" %}
+{% block content %}
 
-<div class="container mt-4">
-  <div class="jumbotron">
-    <div class="row align-items-start g-5">
-      <!-- Left side: product image + name -->
-      <div class="col-md-5 text-center">
-        <h1>{{ product.product_name }}</h1>
+<div class="container">
+  <!-- Product Header -->
+  <div class="glass-card mb-5 animate-fade-in">
+    <div class="row g-5">
+      <!-- Product Image -->
+      <div class="col-lg-5 text-center">
+        <h1
+          style="font-family: var(--font-display); font-weight: 700; color: var(--color-white); margin-bottom: 1.5rem;">
+          {{ product.product_name }}
+        </h1>
         {% if product.prod_image %}
-        <img src="{{ product.prod_image.url }}" alt="{{ product.product_name }}" class="img-fluid rounded shadow mt-3"
-          style="max-height: 350px" />
+        <img src="{{ product.prod_image.url }}" alt="{{ product.product_name }}" class="img-fluid rounded-4"
+          style="max-height: 350px; box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);" />
         {% endif %}
       </div>
 
-      <!-- Right side: product details -->
-      <div class="col-md-6">
-        <h3>Details</h3>
-        <ul>
-          <li><strong>Color:</strong> {{ product.color }}</li>
-          <li><strong>Fuel Type:</strong> {{ product.fuel_type }}</li>
-          <li><strong>Seat Capacity:</strong> {{ product.seat_capacity }}</li>
-          <li><strong>Mileage:</strong> {{ product.milige }}</li>
-          <li><strong>CC:</strong> {{ product.cc }}</li>
-          <li><strong>Price:</strong> ₹{{ product.price }}</li>
-          <li><strong>Company:</strong> {{ product.Company.name }}</li>
-        </ul>
+      <!-- Product Details -->
+      <div class="col-lg-7">
+        <h3 style="color: var(--color-white); margin-bottom: 1.5rem;">
+          <i class="bi bi-info-circle text-info me-2"></i>Specifications
+        </h3>
 
-        <!-- EMI Button -->
-        <a href="{% url 'calcemi' id=product.id %}" class="btn btn-primary mt-3">
-          Check EMI
-        </a>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-palette me-2"></i>Color</span>
+              <span class="info-value">{{ product.color }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-fuel-pump me-2"></i>Fuel Type</span>
+              <span class="info-value">{{ product.fuel_type }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-people me-2"></i>Seat Capacity</span>
+              <span class="info-value">{{ product.seat_capacity }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-speedometer2 me-2"></i>Mileage</span>
+              <span class="info-value">{{ product.milige }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-gear me-2"></i>Engine CC</span>
+              <span class="info-value">{{ product.cc }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-building me-2"></i>Company</span>
+              <span class="info-value">{{ product.Company.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+              <span style="color: var(--color-gray-400); font-size: 0.9rem;">Price</span>
+              <div style="font-size: 2rem; font-weight: 800; color: var(--color-accent-emerald);">
+                ₹{{ product.price }}
+              </div>
+            </div>
+            <a href="{% url 'calcemi' id=product.id %}" class="btn btn-gradient-primary btn-modern px-4">
+              <i class="bi bi-calculator me-2"></i>Calculate EMI
+            </a>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <hr />
-
-    <!-- Interior Images -->
-    <h3>Interior Images</h3>
-    <div class="row">
+  <!-- Interior Images -->
+  <div class="mb-5">
+    <h3 style="font-family: var(--font-display); font-weight: 700; color: var(--color-white); margin-bottom: 1.5rem;">
+      <i class="bi bi-image text-info me-2"></i>Interior Gallery
+    </h3>
+    <div class="row g-4">
       {% for img in interior_images %}
-      <div class="col-md-4 col-sm-6 mb-3">
-        <img src="{{ img.interior.url }}" class="img-fluid rounded shadow" />
+      <div class="col-md-4 col-6">
+        <div class="glass p-2">
+          <img src="{{ img.interior.url }}" class="img-fluid rounded"
+            style="width: 100%; height: 180px; object-fit: cover;" />
+        </div>
       </div>
       {% empty %}
-      <p>No interior images available.</p>
+      <div class="col-12">
+        <div class="glass p-4 text-center" style="color: var(--color-gray-400);">
+          <i class="bi bi-image" style="font-size: 2rem;"></i>
+          <p class="mb-0 mt-2">No interior images available.</p>
+        </div>
+      </div>
       {% endfor %}
     </div>
+  </div>
 
-    <!-- Exterior Images -->
-    <h3>Exterior Images</h3>
-    <div class="row">
+  <!-- Exterior Images -->
+  <div class="mb-5">
+    <h3 style="font-family: var(--font-display); font-weight: 700; color: var(--color-white); margin-bottom: 1.5rem;">
+      <i class="bi bi-camera text-info me-2"></i>Exterior Gallery
+    </h3>
+    <div class="row g-4">
       {% for img in exterior_images %}
-      <div class="col-md-4 col-sm-6 mb-3">
-        <img src="{{ img.exterior.url }}" class="img-fluid rounded shadow" />
+      <div class="col-md-4 col-6">
+        <div class="glass p-2">
+          <img src="{{ img.exterior.url }}" class="img-fluid rounded"
+            style="width: 100%; height: 180px; object-fit: cover;" />
+        </div>
       </div>
       {% empty %}
-      <p>No exterior images available.</p>
+      <div class="col-12">
+        <div class="glass p-4 text-center" style="color: var(--color-gray-400);">
+          <i class="bi bi-camera" style="font-size: 2rem;"></i>
+          <p class="mb-0 mt-2">No exterior images available.</p>
+        </div>
+      </div>
       {% endfor %}
     </div>
-    <br><br><br><br><br>
-    <div class="card-footer text-center bg-light">
-      <a href="{% url 'product_final_price' id=product.id %}
-" class="btn btn-outline-primary btn-sm">
-        Final Price
-      </a>
-      <a href="{% url 'book_test_drive' id=product.id %}" class="btn btn-outline-primary btn-sm">
-        Book a Test Drive
-      </a>
-      <a href="#" class="btn btn-outline-primary btn-sm"> Make an enquiry </a>
+  </div>
 
+  <!-- Action Buttons -->
+  <div class="glass-card text-center mb-5">
+    <h4 style="color: var(--color-white); margin-bottom: 1.5rem;">Ready to Take the Next Step?</h4>
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+      <a href="{% url 'product_final_price' id=product.id %}" class="btn btn-gradient-primary btn-modern px-4">
+        <i class="bi bi-receipt me-2"></i>Final Price
+      </a>
+      <a href="{% url 'book_test_drive' id=product.id %}" class="btn btn-gradient-secondary btn-modern px-4">
+        <i class="bi bi-calendar-check me-2"></i>Book Test Drive
+      </a>
+      <a href="{% url 'make_enquiry' id=product.id %}" class="btn btn-glass btn-modern px-4">
+        <i class="bi bi-envelope me-2"></i>Make Enquiry
+      </a>
     </div>
   </div>
 </div>
-<br><br><br><br><br><br><br><br><br><br>
+
 {% endblock %}

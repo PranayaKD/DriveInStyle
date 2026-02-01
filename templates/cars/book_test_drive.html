@@ -1,110 +1,104 @@
-{% extends 'cars/base.html' %}
+{% extends 'navbar.html' %}
 {% block content %}
 
-<div class="container py-5" style="max-width: 700px;">
-    <h2 class="mb-4 text-center text-success">🚗 Book a Test Drive for {{ product.product_name }}</h2>
-
-    {% if confirmed %}
+<div class="auth-container">
+    <div class="auth-card animate-fade-in" style="max-width: 700px;">
+        {% if confirmed %}
         <!-- Confirmation Message -->
-        <div class="alert alert-success text-center mt-4" role="alert">
-            Your test drive booking has been <strong>confirmed</strong>!  
-            We’ll contact you soon with further details.
+        <div class="text-center py-4">
+            <div class="auth-icon mx-auto mb-4" style="background: linear-gradient(135deg, #00ff88, #00d4ff);">
+                <i class="bi bi-check-lg"></i>
+            </div>
+            <h2 class="auth-title">Test Drive Booked!</h2>
+            <p class="auth-subtitle mb-4">
+                Your test drive for <strong>{{ product.product_name }}</strong> has been confirmed!<br>
+                We'll contact you soon with further details.
+            </p>
+            <a href="{% url 'product_detail' product.id %}" class="btn btn-gradient-primary btn-modern px-5 py-3">
+                <i class="bi bi-arrow-left me-2"></i>Back to Product
+            </a>
         </div>
-        <div class="text-center mt-3">
-            <a href="{% url 'product_detail' product.id %}" class="btn btn-secondary">⬅ Back to Product</a>
+
+        {% else %}
+        <!-- Booking Form -->
+        <div class="auth-header">
+            <div class="auth-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
+                <i class="bi bi-calendar-check"></i>
+            </div>
+            <h1 class="auth-title">Book a Test Drive</h1>
+            <p class="auth-subtitle">{{ product.product_name }}</p>
         </div>
-    {% else %}
-        <!-- Booking Form Card -->
-        <form method="post" class="mt-4 p-4" style="background-color: #1a1a2e; border-radius: 12px; color: #fff;">
+
+        <form method="post" class="modern-form">
             {% csrf_token %}
 
-            <!-- User & Product Info -->
-            <h5 class="mb-3">Your Information</h5>
-            <div class="mb-3">
-                {{ form.product_name.label_tag }}
-                {{ form.product_name }}
-            </div>
-            <div class="mb-3">
-                {{ form.user_name.label_tag }}
-                {{ form.user_name }}
-            </div>
-            <div class="mb-3">
-                {{ form.phone.label_tag }}
-                {{ form.phone }}
-            </div>
-            <div class="mb-3">
-                {{ form.email.label_tag }}
-                {{ form.email }}
+            <!-- User Information -->
+            <div class="section-header">
+                <i class="bi bi-person-badge"></i>
+                <h6>Your Information</h6>
             </div>
 
-            <hr style="border-color: #444;" />
-
-            <!-- Date and Slot -->
-            <h5 class="mb-3 mt-3">Select Date & Time</h5>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    {{ form.t_date.label_tag }}
+                    <label class="form-label-modern">Product Name</label>
+                    {{ form.product_name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Your Name</label>
+                    {{ form.user_name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Phone Number</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Email Address</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <!-- Date and Time Selection -->
+            <div class="section-header">
+                <i class="bi bi-clock"></i>
+                <h6>Select Date & Time</h6>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Preferred Date</label>
                     {{ form.t_date }}
                     {% for error in form.t_date.errors %}
-                        <div class="text-danger">{{ error }}</div>
+                    <div class="alert-modern alert-danger-modern mt-2 py-2 px-3" style="font-size: 0.85rem;">
+                        <i class="bi bi-exclamation-circle"></i> {{ error }}
+                    </div>
                     {% endfor %}
                 </div>
                 <div class="col-md-6 mb-3">
-                    {{ form.time_slot.label_tag }}
+                    <label class="form-label-modern">Time Slot</label>
                     {{ form.time_slot }}
                     {% for error in form.time_slot.errors %}
-                        <div class="text-danger">{{ error }}</div>
+                    <div class="alert-modern alert-danger-modern mt-2 py-2 px-3" style="font-size: 0.85rem;">
+                        <i class="bi bi-exclamation-circle"></i> {{ error }}
+                    </div>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-success btn-lg">📅 Book Test Drive</button>
-                <a href="{% url 'product_detail' product.id %}" class="btn btn-secondary btn-lg ms-2">⬅ Back</a>
+            <!-- Submit Buttons -->
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-gradient-secondary btn-modern flex-grow-1 py-3">
+                    <i class="bi bi-calendar-check me-2"></i>Book Test Drive
+                </button>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-glass btn-modern py-3 px-4">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
             </div>
         </form>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
-
-<style>
-/* Form Inputs */
-input, select {
-    border-radius: 8px;
-    border: 1px solid #444;
-    padding: 10px;
-    background-color: #222;
-    color: #fff;
-    width: 100%;
-}
-input:focus, select:focus {
-    outline: none;
-    border-color: #00ff99;
-    box-shadow: 0 0 5px #00ff99;
-}
-
-/* Labels */
-label {
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-}
-
-/* Buttons */
-.btn-lg {
-    border-radius: 50px;
-    font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.btn-success:hover {
-    background-color: #00ff99;
-    color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 0 10px #00ff99;
-}
-.btn-secondary:hover {
-    background-color: #555;
-    transform: translateY(-2px);
-}
-</style>
 
 {% endblock %}

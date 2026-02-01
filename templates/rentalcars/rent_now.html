@@ -1,38 +1,81 @@
-{% extends "cars/base.html" %}
+{% extends "navbar.html" %}
 {% load static %}
 {% block content %}
-<div class="container my-5">
-    <h2 class="fw-bold">Rent Now - {{ car.car_name }}</h2>
-    <form method="post" action="{% url 'calculate_rent' car.id %}">
-        {% csrf_token %}
 
-        <div class="mb-3">
-            <label class="form-label">Car Name</label>
-            <input type="text" class="form-control" value="{{ car.car_name }}" readonly>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Total KM Driven</label>
-            <input type="text" class="form-control" value="{{ car.total_km_driven }}" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Fuel Type</label>
-            <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Seating Capacity</label>
-            <input type="text" class="form-control" value="{{ car.seat_capacity }}" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Total No. of Days</label>
-            <input type="number" name="days" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Expected KM (Optional)</label>
-            <input type="number" name="expected_km" class="form-control" placeholder="Leave blank for auto-calc">
+<div class="auth-container">
+    <div class="auth-card animate-fade-in">
+        <!-- Header -->
+        <div class="auth-header">
+            <div class="auth-icon">
+                <i class="bi bi-key"></i>
+            </div>
+            <h1 class="auth-title">Rent Now</h1>
+            <p class="auth-subtitle">{{ car.car_name }}</p>
         </div>
 
-        <button type="submit" class="btn btn-primary">Calculate</button>
-    </form>
+        <!-- Rent Form -->
+        <form method="post" action="{% url 'calculate_rent' car.id %}" class="modern-form">
+            {% csrf_token %}
+
+            <!-- Car Info (Read-only) -->
+            <div class="section-header">
+                <i class="bi bi-car-front"></i>
+                <h6>Car Information</h6>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Car Name</label>
+                    <input type="text" class="form-control" value="{{ car.car_name }}" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Fuel Type</label>
+                    <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Total KM Driven</label>
+                    <input type="text" class="form-control" value="{{ car.total_km_driven }}" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Seating Capacity</label>
+                    <input type="text" class="form-control" value="{{ car.seat_capacity }} Seater" readonly />
+                </div>
+            </div>
+
+            <!-- Rental Details -->
+            <div class="section-header">
+                <i class="bi bi-calendar3"></i>
+                <h6>Rental Details</h6>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Total No. of Days *</label>
+                    <input type="number" name="days" class="form-control" required placeholder="Enter number of days" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Expected KM (Optional)</label>
+                    <input type="number" name="expected_km" class="form-control"
+                        placeholder="Leave blank for auto-calc" />
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-gradient-primary btn-modern w-100 py-3 mt-3">
+                <i class="bi bi-calculator me-2"></i>Calculate Rent
+            </button>
+        </form>
+
+        <!-- Footer Link -->
+        <div class="auth-footer">
+            <a href="{% url 'rental_details' car.id %}">
+                <i class="bi bi-arrow-left me-1"></i>Back to Car Details
+            </a>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

@@ -1,20 +1,50 @@
-{% extends 'cars/base.html'  %}
+{% extends 'navbar.html' %}
 {% block content %}
 
-<div class="container">
-    <div class="jumbotron">
-        <h1>Calculate your Emi...</h1>
-        <form method="POST">
+<div class="auth-container">
+    <div class="auth-card animate-fade-in">
+        <!-- Header -->
+        <div class="auth-header">
+            <div class="auth-icon">
+                <i class="bi bi-calculator"></i>
+            </div>
+            <h1 class="auth-title">EMI Calculator</h1>
+            <p class="auth-subtitle">Calculate your monthly installments</p>
+        </div>
+
+        <!-- EMI Form -->
+        <form method="POST" class="modern-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" class="btn btn-info" value="Calculate">
-        </form>
-        {% if emi %}
 
-        <h4>Your EMI : ₹{{ emi|floatformat:2}}</h4>
-        <p>Interest Rate: {{ interest_rate }}%</p>
+            <button type="submit" class="btn btn-gradient-primary btn-modern w-100 py-3 mt-3">
+                <i class="bi bi-calculator me-2"></i>Calculate EMI
+            </button>
+        </form>
+
+        <!-- EMI Result -->
+        {% if emi %}
+        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+            <div class="glass p-4 text-center">
+                <p style="color: var(--color-gray-400); margin-bottom: 0.5rem;">Your Monthly EMI</p>
+                <h2
+                    style="font-family: var(--font-display); font-weight: 800; color: var(--color-accent-emerald); font-size: 2.5rem; margin-bottom: 0.5rem;">
+                    ₹{{ emi|floatformat:2 }}
+                </h2>
+                <p style="color: var(--color-gray-400); margin-bottom: 0;">
+                    <i class="bi bi-percent me-1"></i>Interest Rate: {{ interest_rate }}%
+                </p>
+            </div>
+        </div>
         {% endif %}
 
+        <!-- Footer Link -->
+        <div class="auth-footer">
+            <a href="javascript:history.back()">
+                <i class="bi bi-arrow-left me-1"></i>Back to Product
+            </a>
+        </div>
     </div>
 </div>
+
 {% endblock %}

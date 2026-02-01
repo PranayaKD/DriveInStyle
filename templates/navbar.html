@@ -6,6 +6,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drive In Style</title>
+  <meta name="description"
+    content="Drive In Style - Premium car buying and rental service. Luxury, comfort & performance all in one place." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -13,56 +22,28 @@
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
 
-  <style>
-    /* Make footer stick at bottom */
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    main {
-      flex: 1; /* pushes footer down */
-    }
-
-    /* Navbar Gradient */
-    .navbar {
-      background: linear-gradient(90deg, #1e1e2f, #0d6efd);
-    }
-    .navbar .nav-link {
-      color: #f8f9fa;
-      font-weight: 500;
-    }
-    .navbar .nav-link:hover {
-      color: #00ff99;
-    }
-    .navbar .btn {
-      font-weight: 600;
-    }
-
-    /* Footer styling */
-    footer {
-      background: #212529;
-      color: #ccc;
-      padding: 20px 0;
-    }
-    footer a {
-      color: #f8f9fa;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <!-- Custom Modern Styles -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 </head>
 
 <body>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+  </div>
+
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-modern shadow-sm sticky-top">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-        <i class="bi bi-car-front me-2"></i> Drive In Style
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <i class="bi bi-car-front-fill"></i>
+        <span>Drive In Style</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -70,23 +51,35 @@
         <ul class="navbar-nav ms-auto align-items-lg-center">
           {% if user.is_authenticated %}
           <li class="nav-item mx-2">
-            <a href="{% url 'home' %}" class="nav-link">Home</a>
+            <a href="{% url 'home' %}" class="nav-link">
+              <i class="bi bi-house-door me-1"></i> Home
+            </a>
           </li>
           <li class="nav-item mx-2">
-            <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+            <a href="{% url 'profile' %}" class="nav-link">
+              <i class="bi bi-person me-1"></i> Profile
+            </a>
           </li>
           <li class="nav-item mx-2">
-            <a href="{% url 'company' %}" class="nav-link">Company</a>
+            <a href="{% url 'company' %}" class="nav-link">
+              <i class="bi bi-building me-1"></i> Company
+            </a>
           </li>
           <li class="nav-item mx-2">
-            <a href="{% url 'logout' %}" class="btn btn-outline-light px-3 rounded-pill">Logout</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-glow btn-modern px-4">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
           </li>
           {% else %}
           <li class="nav-item mx-2">
-            <a href="{% url 'register' %}" class="btn btn-light text-dark px-3 rounded-pill">Register</a>
+            <a href="{% url 'register' %}" class="btn btn-glass btn-modern px-4">
+              <i class="bi bi-person-plus"></i> Register
+            </a>
           </li>
           <li class="nav-item mx-2">
-            <a href="{% url 'login' %}" class="btn btn-warning px-3 rounded-pill">Login</a>
+            <a href="{% url 'login' %}" class="btn btn-gradient-primary btn-modern px-4">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
           </li>
           {% endif %}
         </ul>
@@ -94,28 +87,80 @@
     </div>
   </nav>
 
+  <!-- Messages Display -->
+  {% if messages %}
+  <div class="container mt-4">
+    {% for message in messages %}
+    <div
+      class="alert-modern {% if message.tags == 'success' %}alert-success-modern{% elif message.tags == 'error' %}alert-danger-modern{% elif message.tags == 'warning' %}alert-warning-modern{% else %}alert-info-modern{% endif %}"
+      role="alert">
+      <i
+        class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% elif message.tags == 'error' %}bi-exclamation-circle-fill{% elif message.tags == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <!-- Page Content -->
   <main class="container my-5">
     {% block content %}{% endblock %}
   </main>
 
   <!-- Footer -->
-  <footer class="text-center">
+  <footer class="footer-modern text-center">
     <div class="container">
-      <p class="mb-1">© 2025 Drive In Style. All Rights Reserved.</p>
-      <p>
-        <a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="#">Support</a>
-      </p>
-      <div>
-        <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="me-3"><i class="bi bi-twitter"></i></a>
-        <a href="#"><i class="bi bi-instagram"></i></a>
+      <div class="row mb-4">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h5 class="text-white mb-3">
+            <i class="bi bi-car-front-fill text-info me-2"></i>Drive In Style
+          </h5>
+          <p class="small mb-0">Premium car buying and rental service. Experience luxury, comfort & performance.</p>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h6 class="text-white mb-3">Quick Links</h6>
+          <a href="{% url 'home' %}" class="d-block mb-2">Home</a>
+          <a href="{% url 'company' %}" class="d-block mb-2">Browse Cars</a>
+          <a href="{% url 'rental_home' %}" class="d-block">Rent a Car</a>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-white mb-3">Connect With Us</h6>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr style="border-color: rgba(255,255,255,0.1);">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-md-start mb-2 mb-md-0">
+          <p class="mb-0 small">© 2025 Drive In Style. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="#" class="small me-3">Privacy Policy</a>
+          <a href="#" class="small me-3">Terms of Service</a>
+          <a href="#" class="small">Support</a>
+        </div>
       </div>
     </div>
   </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Page Loader Script -->
+  <script>
+    window.addEventListener('load', function () {
+      const loader = document.getElementById('pageLoader');
+      if (loader) {
+        setTimeout(function () {
+          loader.classList.add('hidden');
+        }, 300);
+      }
+    });
+  </script>
 </body>
 
 </html>

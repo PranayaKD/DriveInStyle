@@ -1,12 +1,49 @@
-{% extends 'navbar.html' %} {% block content %}
-<div class="container">
-  <div class="jumbotron">
-    <h1>Update User Details</h1>
-    <form action="{% url 'update' %}" method="POST">
-      {% csrf_token %} 
-      {{ form.as_p }} 
-      {{ form1.as_p }}
-      <input type="submit" class="btn btn-info" value="UPDATE" />
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="auth-container">
+  <div class="auth-card auth-card-wide animate-fade-in">
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="bi bi-pencil-square"></i>
+      </div>
+      <h1 class="auth-title">Update Profile</h1>
+      <p class="auth-subtitle">Keep your information up to date</p>
+    </div>
+
+    <!-- Update Form -->
+    <form action="{% url 'update' %}" method="POST" enctype="multipart/form-data" class="modern-form">
+      {% csrf_token %}
+
+      <!-- Account Information Section -->
+      <div class="section-header">
+        <i class="bi bi-person-badge"></i>
+        <h6>Account Information</h6>
+      </div>
+      <div class="row">
+        {{ form.as_p }}
+      </div>
+
+      <!-- Profile Details Section -->
+      <div class="section-header">
+        <i class="bi bi-card-text"></i>
+        <h6>Profile Details</h6>
+      </div>
+      <div class="row">
+        {{ form1.as_p }}
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex gap-3 mt-4">
+        <button type="submit" class="btn btn-gradient-primary btn-modern flex-grow-1 py-3">
+          <i class="bi bi-check-lg me-2"></i>Save Changes
+        </button>
+        <a href="{% url 'profile' %}" class="btn btn-glass btn-modern py-3 px-4">
+          <i class="bi bi-x-lg"></i>
+        </a>
+      </div>
     </form>
   </div>
 </div>

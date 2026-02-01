@@ -1,18 +1,69 @@
-{% extends "cars/base.html" %}
+{% extends "navbar.html" %}
 {% load static %}
 
 {% block content %}
-<div class="container text-center my-5">
-    <h2 class="fw-bold">🚗 Choose Your Car Type for Rental</h2>
-    <p class="text-muted">Select from our premium fleet of 5-seater and 7-seater cars.</p>
-    
-    <div class="mt-4">
-        <a href="{% url 'rental_list' 5 %}" class="btn btn-primary btn-lg mx-3">5 Seater</a>
-        <a href="{% url 'rental_list' 7 %}" class="btn btn-success btn-lg mx-3">7 Seater</a>
+
+<div class="container text-center">
+    <!-- Hero Section -->
+    <div class="glass-card py-5 mb-5 animate-fade-in">
+        <div class="auth-icon mx-auto mb-4" style="background: linear-gradient(135deg, #00d4ff, #00ff88);">
+            <i class="bi bi-key"></i>
+        </div>
+        <h1 style="font-family: var(--font-display); font-weight: 800; color: var(--color-white); font-size: 2.5rem;">
+            Choose Your Rental Car
+        </h1>
+        <p style="color: var(--color-gray-400); max-width: 500px; margin: 0 auto 2rem;">
+            Select from our premium fleet of 5-seater and 7-seater cars for your next journey.
+        </p>
+
+        <!-- Seat Selection Buttons -->
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
+            <a href="{% url 'rental_list' 5 %}" class="btn btn-gradient-primary btn-modern px-5 py-3"
+                style="min-width: 180px;">
+                <i class="bi bi-people me-2"></i>5 Seater
+            </a>
+            <a href="{% url 'rental_list' 7 %}" class="btn btn-gradient-secondary btn-modern px-5 py-3"
+                style="min-width: 180px;">
+                <i class="bi bi-people-fill me-2"></i>7 Seater
+            </a>
+        </div>
     </div>
-    <div class="mt-4">
-        <a href="{% url 'home' %}" class="btn btn-secondary btn-lg">⬅ Back to Home</a>
+
+    <!-- Features Section -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h5>Fully Insured</h5>
+                <p>All our rental cars come with comprehensive insurance coverage for your peace of mind.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
+                    <i class="bi bi-currency-rupee"></i>
+                </div>
+                <h5>Affordable Rates</h5>
+                <p>Competitive pricing with transparent billing. No hidden charges or surprise fees.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card h-100">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                    <i class="bi bi-headset"></i>
+                </div>
+                <h5>24/7 Support</h5>
+                <p>Our support team is available around the clock to assist you with any queries.</p>
+            </div>
+        </div>
     </div>
+
+    <!-- Back Button -->
+    <a href="{% url 'home' %}" class="btn btn-glass btn-modern px-4">
+        <i class="bi bi-arrow-left me-2"></i>Back to Home
+    </a>
 </div>
-</div>
+
 {% endblock %}

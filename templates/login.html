@@ -1,22 +1,58 @@
-{% extends 'navbar.html' %} {% block content %}
-<div class="container">
-  <div class="jumbotron">
-    <div class="card card-body">
-      <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-        <label for="username">username</label>
-        <input type="text" name="username" placeholder="Enter Username" />
+{% extends 'navbar.html' %}
+{% block content %}
 
-        <br><br>
-        <label for="password">password</label>
-        <input type="password" name="password" placeholder="Enter password" />
-        <br><br>
-        <a href="{% url 'passwordreset' %}"> Forgot password</a>
-        <br><br>
-        <input type="submit" class="btn btn-success" value="LOGIN" />
-      </form>
+<div class="auth-container">
+  <div class="auth-card animate-fade-in">
+    <!-- Header with Icon -->
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="bi bi-person-circle"></i>
+      </div>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">Sign in to continue to Drive In Style</p>
+    </div>
+
+    <!-- Login Form -->
+    <form action="{% url 'login' %}" method="POST" class="modern-form">
+      {% csrf_token %}
+
+      <!-- Username Field -->
+      <div class="form-floating-modern">
+        <input type="text" name="username" class="form-control" id="username" placeholder="Enter your username" required
+          autocomplete="username" />
+        <i class="bi bi-person form-icon"></i>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-floating-modern">
+        <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password"
+          required autocomplete="current-password" />
+        <i class="bi bi-lock form-icon"></i>
+      </div>
+
+      <!-- Forgot Password Link -->
+      <div class="text-end mb-4">
+        <a href="{% url 'passwordreset' %}" class="text-info text-decoration-none"
+          style="color: var(--color-accent-cyan) !important;">
+          <i class="bi bi-question-circle me-1"></i>Forgot password?
+        </a>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-gradient-primary btn-modern w-100 py-3">
+        <i class="bi bi-box-arrow-in-right"></i>
+        Sign In
+      </button>
+    </form>
+
+    <!-- Footer Links -->
+    <div class="auth-footer">
+      <p class="mb-0" style="color: var(--color-gray-400);">
+        Don't have an account?
+        <a href="{% url 'register' %}">Create one now</a>
+      </p>
     </div>
   </div>
 </div>
-{% endblock %}
 
+{% endblock %}

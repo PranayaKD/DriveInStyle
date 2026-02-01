@@ -59,9 +59,10 @@ def calculate_rent(request, car_id):
         context = {
             "car": car,
             "days": days,
-            "total_km": total_km,
-            "rate": rate,
-            "total_rent": total_rent,
+            "except_km": total_km,
+            "km": rate,
+            "fp": total_rent,
+            "ca": True,
         }
         return render(request, "rentalcars/rent_result.html", context)
 def final_rent_price(request, car_id):
@@ -92,8 +93,12 @@ def final_rent_price(request, car_id):
             price_per_km = 10
 
         km_diff = km_now - total_km_driven
-        accumulated_price = km_diff * price_per_km
-
+        
+        # Enforce minimum rental distance (300km per day) consistent with estimation
+        min_km = days * 300
+        chargeable_km = max(km_diff, min_km)
+        
+        accumulated_price = chargeable_km * price_per_km
 
         allowed_km = days * 300
         extra_km = km_diff - allowed_km
@@ -114,7 +119,8 @@ def final_rent_price(request, car_id):
 
         fuel_price = (km_diff / milage) * fuel_rate if milage else 0
 
-        final_price = accumulated_price - fuel_price
+        # Final price is the accumulated rental cost (fuel is paid by user)
+        final_price = accumulated_price
         
         send_email_view(user_email, car.car_name, km_now, final_price)
         print("Email sent")

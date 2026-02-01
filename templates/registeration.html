@@ -1,59 +1,122 @@
-{% extends 'navbar.html' %} {% load crispy_forms_tags %} {% block content %}
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
 
-<div class="container">
-  <div class="jumbotron">
-    <div class="card card-body">
-      {% if registered %}
-      <div class="card card-body">
-        <h1>Thank you for Registeration</h1>
-        <p>please proceed to <a href="/login/"> login</a></p>
+<div class="auth-container">
+  <div class="auth-card auth-card-wide animate-fade-in">
+    {% if registered %}
+    <!-- Success State -->
+    <div class="text-center py-4">
+      <div class="auth-icon mx-auto mb-4" style="background: linear-gradient(135deg, #00ff88, #00d4ff);">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <h2 class="auth-title">Registration Successful!</h2>
+      <p class="auth-subtitle mb-4">Thank you for joining Drive In Style</p>
+      <a href="{% url 'login' %}" class="btn btn-gradient-primary btn-modern px-5 py-3">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Proceed to Login
+      </a>
+    </div>
+
+    {% else %}
+    <!-- Registration Form -->
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="bi bi-person-plus"></i>
+      </div>
+      <h1 class="auth-title">Create Your Account</h1>
+      <p class="auth-subtitle">Join Drive In Style and experience premium car services</p>
+    </div>
+
+    <form enctype="multipart/form-data" method="POST" class="modern-form">
+      {% csrf_token %}
+
+      <!-- Account Information Section -->
+      <div class="section-header">
+        <i class="bi bi-person-badge"></i>
+        <h6>Account Information</h6>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.username | as_crispy_field }}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.email | as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.password | as_crispy_field }}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form1.phone | as_crispy_field }}
+        </div>
       </div>
 
-      {% else %}
-      <h1 style="text-align: center">Registeration Form</h1>
-      <form enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        <div class="row">
-          <div class="col-md-6">
-            {{ form.username | as_crispy_field}} <br />
-          </div>
-          <div class="col-md-6">{{ form.email | as_crispy_field}} <br /></div>
+      <!-- Address Information Section -->
+      <div class="section-header">
+        <i class="bi bi-geo-alt"></i>
+        <h6>Address Details</h6>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form1.door_no | as_crispy_field }}
         </div>
-        <div class="row">
-          <div class="col-md-6">{{ form1.phone | as_crispy_field}} <br /></div>
-          <div class="col-md-6">
-            {{ form1.door_no | as_crispy_field}} <br />
-          </div>
+        <div class="col-md-6 mb-3">
+          {{ form1.street | as_crispy_field }}
         </div>
-        <div class="row">
-          <div class="col-md-6">{{ form1.street | as_crispy_field}} <br /></div>
-          <div class="col-md-6">
-            {{ form1.landmark | as_crispy_field}} <br />
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form1.landmark | as_crispy_field }}
         </div>
-        <div class="row">
-          <div class="col-md-6">{{ form1.city | as_crispy_field}} <br /></div>
-          <div class="col-md-6">{{ form1.state | as_crispy_field}} <br /></div>
+        <div class="col-md-6 mb-3">
+          {{ form1.city | as_crispy_field }}
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            {{ form1.pincode | as_crispy_field}} <br />
-          </div>
-          <div class="col-md-6">
-            {{ form.password | as_crispy_field}} <br />
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form1.state | as_crispy_field }}
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{ form1.userpic | as_crispy_field}} <br />
-          </div>
+        <div class="col-md-6 mb-3">
+          {{ form1.pincode | as_crispy_field }}
         </div>
-        {{ form1.captcha }}
-        <input type="submit" value="REGISTER" />
-      </form>
+      </div>
 
-      {% endif %}
+      <!-- Profile Picture Section -->
+      <div class="section-header">
+        <i class="bi bi-camera"></i>
+        <h6>Profile Picture</h6>
+      </div>
+      <div class="mb-4">
+        <div class="file-upload-modern">
+          <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem; color: var(--color-accent-cyan);"></i>
+          <p class="mt-2 mb-0" style="color: var(--color-gray-400);">
+            Click or drag to upload your profile picture
+          </p>
+          {{ form1.userpic }}
+        </div>
+      </div>
+
+      <!-- Captcha -->
+      <div class="mb-4">
+        {{ form1.captcha }}
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-gradient-primary btn-modern w-100 py-3">
+        <i class="bi bi-person-check me-2"></i>Create Account
+      </button>
+    </form>
+
+    <!-- Footer Links -->
+    <div class="auth-footer">
+      <p class="mb-0" style="color: var(--color-gray-400);">
+        Already have an account?
+        <a href="{% url 'login' %}">Sign in here</a>
+      </p>
     </div>
+    {% endif %}
   </div>
 </div>
+
 {% endblock %}

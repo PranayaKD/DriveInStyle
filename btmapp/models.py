@@ -1,16 +1,126 @@
+# btmapp/models.py
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class UserRegisteration(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    """
+    Extended user profile model with address and contact information
+    """
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='userregisteration'
+    )
     
+    # Contact Information
+    phone = models.PositiveBigIntegerField(
+        validators=[
+            MinValueValidator(1000000000, message="Phone number must be 10 digits"),
+            MaxValueValidator(9999999999, message="Phone number must be 10 digits")
+        ],
+        help_text="10-digit mobile number"
+    )
     
-    phone = models.PositiveIntegerField()
-    door_no = models.IntegerField()
+    # Address Information
+    door_no = models.CharField(
+        max_length=20,
+        help_text="Door/House number"
+    )
     street = models.CharField(max_length=100)
     landmark = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
-    pincode = models.CharField(max_length=100)
-    userpic = models.ImageField(upload_to="profiles/",blank=True, null=True)
+    pincode = models.CharField(
+        max_length=6,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{6}$',
+                message='Pincode must be exactly 6 digits'
+            )
+        ]
+    )
+    
+    # Profile Picture
+    userpic = models.ImageField(
+        upload_to="profiles/%Y/%m/",
+        blank=True,
+        null=True,
+        help_text="Profile picture"
+    )
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "User Profile"
+        verbose_name_plural = "User Profiles"
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+    
+    @property
+    def full_address(self):
+        """Return formatted full address"""
+        return f"{self.door_no}, {self.street}, {self.landmark}, {self.city}, {self.state} - {self.pincode}"
+    
+    @property
+    def display_phone(self):
+        """Return formatted phone number"""
+        phone_str = str(self.phone)
+        return f"+91 {phone_str[:5]} {phone_str[5:]}"
+    
+    def get_profile_picture_url(self):
+        """Return profile picture URL or default"""
+        if self.userpic:
+            return self.userpic.url
+        return '/static/images/default-avatar.png'  # Make sure to add a default image
+
+
+# Signal to create UserRegisteration when User is created
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Automatically create UserRegisteration when a new User is created
+    This helps prevent AttributeError when accessing user.userregisteration
+    """
+    if created:
+        # Only create if it doesn't exist (prevents duplicate creation)
+        UserRegisteration.objects.get_or_create(
+            user=instance,
+            defaults={
+                'phone': 0,  # Placeholder, should be updated by user
+                'door_no': '',
+                'street': '',
+                'landmark': '',
+                'city': '',
+                'state': '',
+                'pincode': '000000',
+            }
+        )
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """
+    Save UserRegisteration when User is saved
+    """
+    # Try to save if it exists, create if it doesn't
+    try:
+        instance.userregisteration.save()
+    except UserRegisteration.DoesNotExist:
+        UserRegisteration.objects.create(
+            user=instance,
+            phone=0,
+            door_no='',
+            street='',
+            landmark='',
+            city='',
+            state='',
+            pincode='000000'
+        )

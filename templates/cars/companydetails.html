@@ -1,74 +1,114 @@
-{% extends "cars/base.html" %}
+{% extends "navbar.html" %}
 {% block content %}
 
 <div class="container">
-  <div class="jumbotron">
-
-    <!-- Company Details -->
-    <div class="row align-items-center mb-4">
-      <!-- Left side: details -->
-      <div class="col-md-6">
-        <h1>{{ company.name }} Company Details</h1>
-        <p><strong>CEO:</strong> {{ company.ceo }}</p>
-        <p><strong>Established Year:</strong> {{ company.est_year }}</p>
-        <p><strong>Origin:</strong> {{ company.origin }}</p>
+  <!-- Company Header Card -->
+  <div class="glass-card mb-5 animate-fade-in">
+    <div class="row align-items-center">
+      <!-- Company Details -->
+      <div class="col-md-7">
+        <h1
+          style="font-family: var(--font-display); font-weight: 700; color: var(--color-white); margin-bottom: 1.5rem;">
+          <i class="bi bi-building text-info me-2"></i>{{ company.name }}
+        </h1>
+        <div class="d-flex flex-wrap gap-3 mb-3">
+          <span class="info-badge">
+            <i class="bi bi-person-badge"></i>
+            CEO: {{ company.ceo }}
+          </span>
+          <span class="info-badge">
+            <i class="bi bi-calendar3"></i>
+            Est. {{ company.est_year }}
+          </span>
+          <span class="info-badge">
+            <i class="bi bi-globe"></i>
+            {{ company.origin }}
+          </span>
+        </div>
+        <a href="{% url 'company' %}" class="btn btn-glass btn-modern mt-2">
+          <i class="bi bi-arrow-left"></i> Back to Companies
+        </a>
       </div>
-      <!-- Right side: logo -->
-      <div class="col-md-6 text-center">
+
+      <!-- Company Logo -->
+      <div class="col-md-5 text-center mt-4 mt-md-0">
         {% if company.logo %}
-          <img src="{{ company.logo.url }}" 
-               alt="{{ company.name }} Logo" 
-               class="img-fluid rounded shadow" 
-               style="max-height:180px;">
+        <img src="{{ company.logo.url }}" alt="{{ company.name }} Logo" class="img-fluid rounded"
+          style="max-height: 180px; filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));" />
+        {% else %}
+        <div class="d-flex align-items-center justify-content-center" style="height: 180px;">
+          <i class="bi bi-building" style="font-size: 5rem; color: var(--color-accent-cyan);"></i>
+        </div>
         {% endif %}
       </div>
     </div>
+  </div>
 
-    <hr />
+  <!-- Products Section -->
+  <div class="mb-4">
+    <h2 style="font-family: var(--font-display); font-weight: 700; color: var(--color-white);">
+      <i class="bi bi-car-front text-info me-2"></i>{{ company.name }} Vehicles
+    </h2>
+    <p style="color: var(--color-gray-400);">Explore our collection of premium vehicles</p>
+  </div>
 
-    <!-- Product List -->
-    <h2>List of {{ company.name }} Products</h2>
-    <div class="row">
-      {% for prod in company.companies.all %}
-      <div class="col-md-4 col-sm-6 mb-4">
-        <div class="card shadow-sm">
+  <div class="row g-4">
+    {% for prod in company.companies.all %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card-modern h-100">
+        <!-- Product Image -->
+        {% if prod.prod_image %}
+        <a href="{% url 'product_detail' prod.id %}">
+          <img src="{{ prod.prod_image.url }}" class="w-100" alt="{{ prod.product_name }}"
+            style="height: 200px; object-fit: cover; border-radius: var(--radius-xl) var(--radius-xl) 0 0;" />
+        </a>
+        {% endif %}
 
-          <!-- Product Image as link -->
-          {% if prod.prod_image %}
-          <a href="{% url 'product_detail' prod.id %}">
-            <img src="{{ prod.prod_image.url }}" 
-                 class="card-img-top" 
-                 alt="{{ prod.product_name }}" 
-                 height="200px">
-          </a>
-          {% endif %}
-
-          <div class="card-body">
-            <!-- Product Name as link -->
-            <h5 class="card-title">
-              <a href="{% url 'product_detail' prod.id %}" class="text-decoration-none">
-                {{ prod.product_name }}
-              </a>
-            </h5>
-
-            <p class="card-text"><strong>Color:</strong> {{ prod.color }}</p>
-            <p class="card-text"><strong>Fuel Type:</strong> {{ prod.fuel_type }}</p>
-            <p class="card-text"><strong>Seat Capacity:</strong> {{ prod.seat_capacity }}</p>
-            <p class="card-text"><strong>Mileage:</strong> {{ prod.milige }}</p>
-            <p class="card-text"><strong>CC:</strong> {{ prod.cc }}</p>
-            <p class="card-text"><strong>Price:</strong> ₹{{ prod.price }}</p>
-            <p class="card-text"><strong>Company:</strong> {{ prod.Company.name }}</p>
-
-            <!-- Example EMI page link -->
-            <a href="{% url 'calcemi' id=prod.id %}" class="btn btn-primary btn-sm">
-              Check EMI
+        <div class="card-body">
+          <h5 style="color: var(--color-white); font-weight: 600;">
+            <a href="{% url 'product_detail' prod.id %}" style="color: inherit; text-decoration: none;">
+              {{ prod.product_name }}
             </a>
+          </h5>
+
+          <div class="mt-3">
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-palette me-2"></i>Color</span>
+              <span class="info-value">{{ prod.color }}</span>
+            </div>
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-fuel-pump me-2"></i>Fuel</span>
+              <span class="info-value">{{ prod.fuel_type }}</span>
+            </div>
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-people me-2"></i>Seats</span>
+              <span class="info-value">{{ prod.seat_capacity }}</span>
+            </div>
+            <div class="info-row py-2">
+              <span class="info-label"><i class="bi bi-speedometer2 me-2"></i>Mileage</span>
+              <span class="info-value">{{ prod.milige }}</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3" style="border-top: 1px solid var(--glass-border);">
+            <div class="d-flex justify-content-between align-items-center">
+              <span style="font-size: 1.25rem; font-weight: 700; color: var(--color-accent-emerald);">
+                ₹{{ prod.price }}
+              </span>
+              <a href="{% url 'calcemi' id=prod.id %}" class="btn btn-gradient-primary btn-modern btn-sm">
+                <i class="bi bi-calculator"></i> Check EMI
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      {% endfor %}
     </div>
-
+    {% empty %}
+    <div class="col-12 text-center py-5">
+      <i class="bi bi-car-front" style="font-size: 4rem; color: var(--color-gray-500);"></i>
+      <p class="mt-3" style="color: var(--color-gray-400);">No vehicles available for this company.</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 

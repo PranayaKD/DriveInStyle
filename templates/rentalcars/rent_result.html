@@ -1,25 +1,95 @@
-{% extends 'cars/base.html' %}
+{% extends 'navbar.html' %}
 {% block content %}
-<div class="container my-5">
-    <h2>Rent Details for {{ car.car_name }}</h2>
 
-    <ul class="list-group">
-        <li class="list-group-item"><strong>Car Name:</strong> {{ car.car_name }}</li>
-        <li class="list-group-item"><strong>Price per KM:</strong> ₹{{ km }}</li>
-        <li class="list-group-item"><strong>Total KM Driven:</strong> {{ car.total_km_driven }}</li>
-        {% if days %}<li class="list-group-item"><strong>No. of Days:</strong> {{ days }}</li>{% endif %}
-        {% if except_km %}<li class="list-group-item"><strong>KM Driven Till Now:</strong> {{ except_km }}</li>{% endif %}
-        {% if fp %}<li class="list-group-item"><strong>Final Price:</strong> ₹{{ fp|floatformat:2 }}</li>{% endif %}
-    </ul>
-    {% if ca %}
-    <div class="alert alert-success mt-3">
-        <strong>Calculation Successful!</strong>
+<div class="container">
+    <div class="glass-card animate-fade-in">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <div class="auth-icon mx-auto mb-3" style="background: linear-gradient(135deg, #00ff88, #00d4ff);">
+                <i class="bi bi-check-lg"></i>
+            </div>
+            <h2 style="font-family: var(--font-display); font-weight: 700; color: var(--color-white);">
+                Rent Details
+            </h2>
+            <p style="color: var(--color-gray-400);">{{ car.car_name }}</p>
+        </div>
+
+        <!-- Rent Details -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass p-4">
+                    <div class="info-row py-3">
+                        <span class="info-label" style="min-width: 180px;">
+                            <i class="bi bi-car-front text-info me-2"></i>Car Name
+                        </span>
+                        <span class="info-value">{{ car.car_name }}</span>
+                    </div>
+
+                    <div class="info-row py-3">
+                        <span class="info-label" style="min-width: 180px;">
+                            <i class="bi bi-currency-rupee text-info me-2"></i>Price per KM
+                        </span>
+                        <span class="info-value">₹{{ km }}</span>
+                    </div>
+
+                    <div class="info-row py-3">
+                        <span class="info-label" style="min-width: 180px;">
+                            <i class="bi bi-speedometer text-info me-2"></i>Total KM Driven
+                        </span>
+                        <span class="info-value">{{ car.total_km_driven }} km</span>
+                    </div>
+
+                    {% if days %}
+                    <div class="info-row py-3">
+                        <span class="info-label" style="min-width: 180px;">
+                            <i class="bi bi-calendar3 text-warning me-2"></i>No. of Days
+                        </span>
+                        <span class="info-value">{{ days }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if except_km %}
+                    <div class="info-row py-3">
+                        <span class="info-label" style="min-width: 180px;">
+                            <i class="bi bi-signpost text-warning me-2"></i>KM Driven Till Now
+                        </span>
+                        <span class="info-value">{{ except_km }} km</span>
+                    </div>
+                    {% endif %}
+
+                    {% if fp %}
+                    <div class="mt-4 pt-4" style="border-top: 2px solid var(--color-accent-cyan);">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span style="font-size: 1.25rem; font-weight: 600; color: var(--color-white);">
+                                <i class="bi bi-wallet2 me-2"></i>Final Price
+                            </span>
+                            <span style="font-size: 2rem; font-weight: 800; color: var(--color-accent-emerald);">
+                                ₹{{ fp|floatformat:2 }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if ca %}
+                <div class="alert-modern alert-success-modern mt-4">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <strong>Calculation Successful!</strong> Your rent has been calculated.
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="{% url 'rental_details' car.id %}" class="btn btn-glass btn-modern px-4">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Car Details
+                    </a>
+                    <a href="{% url 'final_rent_price' car.id %}" class="btn btn-gradient-primary btn-modern px-4">
+                        <i class="bi bi-receipt me-2"></i>Final Price Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
+</div>
 
-    <a href="{% url 'rental_details' car.id %}" class="btn btn-success mt-3">⬅ Back to Car Details</a>
-</div>
-<div class="mt-4">
-    <a href="{% url 'final_rent_price' car.id %}" class="btn btn-primary btn-lg">Final Price for Checkout</a>
-</div>
 {% endblock %}

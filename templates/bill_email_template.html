@@ -7,66 +7,109 @@
     <title>Document</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #f4f4f4;
         }
 
-        h2 {
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 30px;
             color: #333;
-            background-color: chartreuse;
-
-        }
-
-        p {
-            font-size: 16px;
-            color: #555;
-            background-color: chartreuse;
-            line-height: 1.5;
         }
 
         .details {
-            margin-top: 20px;
-            padding: 10px;
-
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #00d4ff;
         }
 
-        .details p {
-            margin: 5px 0;
-            background-color: chartreuse;
+        .details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        .details li:last-child {
+            border-bottom: none;
+        }
+
+        .details strong {
+            color: #333;
+            display: inline-block;
+            width: 180px;
+        }
+
+        .price {
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #888;
+            font-size: 12px;
         }
     </style>
 </head>
 
 <body>
-    <p>car_name: </p>
-    <p>exp_km:</p>
-    <p>final_price: </p>
     <div class="container">
         <div class="header">
-            <h2>
-                Bill Invoice
-            </h2>
+            <h2>Rental Bill Invoice</h2>
         </div>
         <div class="content">
-            <p> Hi user,</p>
-            <p>Thank you for using our car rental service. Below are the details of your rental transaction:</p>
+            <p>Hi there,</p>
+            <p>Thank you for choosing <strong>Drive In Style</strong>. Here are the details of your recent rental
+                transaction:</p>
+
             <div class="details">
                 <ul>
-                    <li><strong>Car Name:</strong> abc</li>
-                    <li><strong>KM Driven Till Now:</strong> dushd</li>
-                    <li><strong>Final Price to Pay:</strong> ₹632863</li>
+                    <li><strong>Car Name:</strong> {{ car_name }}</li>
+                    <li><strong>KM Driven Till Now:</strong> {{ exp_km }} km</li>
+                    <li><strong>Final Price to Pay:</strong> <span class="price">₹{{ final_price }}</span></li>
                 </ul>
-
-                <p>If you have any questions or need further assistance, please feel free to contact us.</p>
-                <p>Best regards,<br>The Car Rental Team- Drive In Style</p>
             </div>
+
+            <p>If you have any questions or need further assistance, please feel free to contact our support team.</p>
+            <p style="margin-top: 30px;">Best regards,<br><strong>The Car Rental Team</strong><br>Drive In Style</p>
         </div>
         <div class="footer">
-                <p>This is a automated Email,Please do not replay directly</p>
+            <p>This is an automated email. Please do not reply directly.</p>
+            <p>&copy; 2025 Drive In Style. All rights reserved.</p>
         </div>
     </div>
 </body>

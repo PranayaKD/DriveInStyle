@@ -1,43 +1,123 @@
-{% extends "cars/base.html" %}
+{% extends "navbar.html" %}
 {% load static %}
 {% block content %}
-<div class="container my-5">
-    <h2 class="fw-bold">Final Price Checkout</h2>
-    <form method="post" action="{% url 'final_rent_price' car.id %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label class="form-label">Car Name</label>
-            <input type="text" class="form-control" value="{{ car.car_name }}" readonly>
+
+<div class="auth-container">
+    <div class="auth-card auth-card-wide animate-fade-in">
+        <!-- Header -->
+        <div class="auth-header">
+            <div class="auth-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
+                <i class="bi bi-receipt"></i>
+            </div>
+            <h1 class="auth-title">Final Price Checkout</h1>
+            <p class="auth-subtitle">{{ car.car_name }}</p>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Fuel Type</label>
-            <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly>
+
+        <!-- Checkout Form -->
+        <form method="post" action="{% url 'final_rent_price' car.id %}" class="modern-form">
+            {% csrf_token %}
+
+            <!-- Car Info (Read-only) -->
+            <div class="section-header">
+                <i class="bi bi-car-front"></i>
+                <h6>Car Information</h6>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Car Name</label>
+                    <input type="text" class="form-control" value="{{ car.car_name }}" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">Fuel Type</label>
+                    <input type="text" class="form-control" value="{{ car.fuel_type }}" readonly />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label-modern">Total KM Driven (Before Rental)</label>
+                <input type="text" class="form-control" value="{{ car.total_km_driven }} km" readonly />
+            </div>
+
+            <!-- Rental Input -->
+            <div class="section-header">
+                <i class="bi bi-calculator"></i>
+                <h6>Rental Calculation</h6>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">No. of Days *</label>
+                    <input type="number" name="days" class="form-control" required placeholder="Enter number of days" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label-modern">KM Driven Till Now *</label>
+                    <input type="number" name="exp_km" class="form-control" required
+                        placeholder="Current odometer reading" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-gradient-secondary btn-modern w-100 py-3">
+                <i class="bi bi-calculator me-2"></i>Calculate Final Price
+            </button>
+        </form>
+
+        <!-- Final Price Result -->
+        {% if final_price is not None %}
+        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+            <div class="alert-modern alert-success-modern mb-4">
+                <i class="bi bi-check-circle-fill"></i>
+                <strong>Calculation Complete!</strong> Here's your final rental bill.
+            </div>
+
+            <div class="glass p-4">
+                <div class="info-row py-2">
+                    <span class="info-label" style="min-width: 200px;"><i class="bi bi-calendar3 text-info me-2"></i>No.
+                        of Days</span>
+                    <span class="info-value">{{ days }}</span>
+                </div>
+                <div class="info-row py-2">
+                    <span class="info-label" style="min-width: 200px;"><i
+                            class="bi bi-signpost text-info me-2"></i>Total KM Driven</span>
+                    <span class="info-value">{{ total_km }} km</span>
+                </div>
+                <div class="info-row py-2">
+                    <span class="info-label" style="min-width: 200px;"><i
+                            class="bi bi-currency-rupee text-warning me-2"></i>Price Per KM</span>
+                    <span class="info-value">₹{{ rate }}</span>
+                </div>
+                <div class="info-row py-2">
+                    <span class="info-label" style="min-width: 200px;"><i
+                            class="bi bi-plus-circle text-warning me-2"></i>Accumulated Price</span>
+                    <span class="info-value">₹{{ accumulated_price|floatformat:2 }}</span>
+                </div>
+                <div class="info-row py-2">
+                    <span class="info-label" style="min-width: 200px;"><i
+                            class="bi bi-fuel-pump text-warning me-2"></i>Fuel Price</span>
+                    <span class="info-value">₹{{ fuel_price|floatformat:2 }}</span>
+                </div>
+
+                <div class="mt-3 pt-3" style="border-top: 2px solid var(--color-accent-emerald);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span style="font-size: 1.25rem; font-weight: 600; color: var(--color-white);">
+                            <i class="bi bi-wallet2 me-2"></i>Final Price
+                        </span>
+                        <span style="font-size: 2rem; font-weight: 800; color: var(--color-accent-emerald);">
+                            ₹{{ final_price|floatformat:2 }}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Total KM Driven</label>
-            <input type="text" class="form-control" value="{{ car.total_km_driven }}" readonly>
+        {% endif %}
+
+        <!-- Footer Link -->
+        <div class="auth-footer">
+            <a href="{% url 'rental_details' car.id %}">
+                <i class="bi bi-arrow-left me-1"></i>Back to Car Details
+            </a>
         </div>
-        <div class="mb-3">
-            <label class="form-label">No. of Days</label>
-            <input type="number" name="days" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">KM Driven Till Now</label>
-            <input type="number" name="exp_km" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Calculate Final Price</button>
-    </form>
-    {% if final_price is not None %}
-    <div class="alert alert-success mt-4">
-        <ul class="list-group">
-            <li class="list-group-item"><strong>No. of Days:</strong> {{ days }}</li>
-            <li class="list-group-item"><strong>Total KM Driven (Now - Before):</strong> {{ total_km }}</li>
-            <li class="list-group-item"><strong>Price Per KM:</strong> ₹{{ rate }}</li>
-            <li class="list-group-item"><strong>Accumulated Price:</strong> ₹{{ accumulated_price|floatformat:2 }}</li>
-            <li class="list-group-item"><strong>Fuel Price:</strong> ₹{{ fuel_price|floatformat:2 }}</li>
-            <li class="list-group-item"><strong>Final Price:</strong> <b>₹{{ final_price|floatformat:2 }}</b></li>
-        </ul>
     </div>
-    {% endif %}
 </div>
+
 {% endblock %}

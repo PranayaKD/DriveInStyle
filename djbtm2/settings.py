@@ -12,21 +12,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config  # pip install python-decouple
 
+SECRET_KEY = config('SECRET_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$#04yw0pjz_^x#0$b5t%ft!a=312^(o6@@of60fwfrjqeeph2('
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -45,12 +52,11 @@ INSTALLED_APPS = [
     
     'btmapp',
     'carsapp',
-    'rentalcars'
+    'rentalcars',
     
 ]
 
-RECAPTCHA_PUBLIC_KEY = '6Lcz1LYrAAAAAJJYHAAyjUW_wu0ANWXFl0WI9qv2'
-RECAPTCHA_PRIVATE_KEY = '6Lcz1LYrAAAAAL3n-e2t7G99yZ49FZ8zSxqf8btV'
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 CRISPY_ALLOWED_TEMPLATE_PACK = 'bootstrap5'
@@ -158,6 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTO_LOGOUT = {'IDLE_TIME': 60}
+LOGIN_URL = 'btmapp:login'
 
 from datetime import timedelta
 
@@ -173,6 +180,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER = 'dashpranaya786@gmail.com'
-EMAIL_HOST_PASSWORD = 'qxjg dahr fgrl iysk'
 DEFAULT_FROM_EMAIL = 'dashpranaya786@gmail.com'
 
