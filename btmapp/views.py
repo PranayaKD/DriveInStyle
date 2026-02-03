@@ -113,10 +113,10 @@ def user_login(request):
     return render(request, "login.html", {})
 
 
-@login_required(login_url='login')
 def home(request):
     """
-    Home page view - only accessible to logged-in users
+    Home page view - accessible to all users.
+    Operations requiring login will redirect to login page.
     """
     context = {
         'user': request.user,

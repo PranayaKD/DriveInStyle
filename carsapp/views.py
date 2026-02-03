@@ -4,12 +4,10 @@ from .models import Company, Products, Book_Test_Drive, Enquiry
 from .forms import ProductEmiForm, Test_Drive_Form, EnquiryForm
 import math
 
-@login_required(login_url="login")
 def company_list(request):
     companies = Company.objects.all()
     return render(request, "cars/CompanyList.html", {"comp_name": companies})
 
-@login_required(login_url="login")
 def company_details(request, id=0):
     company = get_object_or_404(Company, id=id)
     return render(request, "cars/companydetails.html", {"company": company})
@@ -41,7 +39,6 @@ def calcemi(request, id=0):
         form = ProductEmiForm(instance=product)
     return render(request, 'cars/emi.html', {'form': form, 'emi': emi})
 
-@login_required(login_url="login")
 def product_detail(request, id=0):
     product = get_object_or_404(Products, id=id)
     interior_images = product.interior_images.all()
@@ -52,7 +49,6 @@ def product_detail(request, id=0):
         "exterior_images": exterior_images
     })
 
-@login_required(login_url="login")
 def final_price(request, id=0):
     product = get_object_or_404(Products, id=id)
     price = product.price

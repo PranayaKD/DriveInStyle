@@ -176,8 +176,17 @@ main {
 }
 
 .glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-cyan);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 212, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+}
+
+.text-glow-emerald {
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
