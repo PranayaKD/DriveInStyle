@@ -101,7 +101,7 @@ class UserProfileForm(forms.ModelForm):
                 'pattern': '[0-9]{10}',
                 'maxlength': '10'
             }),
-            'door_no': forms.NumberInput(attrs={
+            'door_no': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Door/House number'
             }),
@@ -135,8 +135,17 @@ class UserProfileForm(forms.ModelForm):
         help_texts = {
             'phone': 'Enter 10-digit mobile number',
             'pincode': 'Enter 6-digit postal code',
-            'userpic': 'Upload your profile picture (optional)',
+            'userpic': 'Click or drag to upload your profile picture',
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make all fields except phone and captcha optional
+        optional_fields = ['door_no', 'street', 'landmark', 'city', 'state', 'pincode', 'userpic']
+        for field in optional_fields:
+            self.fields[field].required = False
+        
+        self.fields['phone'].required = True
     
     def clean_phone(self):
         """Validate phone number"""

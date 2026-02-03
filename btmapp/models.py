@@ -1,3 +1,4 @@
+
 # btmapp/models.py
 from django.db import models
 from django.contrib.auth.models import User
@@ -28,12 +29,14 @@ class UserRegisteration(models.Model):
     # Address Information
     door_no = models.CharField(
         max_length=20,
-        help_text="Door/House number"
+        help_text="Door/House number",
+        blank=True,
+        null=True
     )
-    street = models.CharField(max_length=100)
-    landmark = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
+    street = models.CharField(max_length=100, blank=True, null=True)
+    landmark = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
     pincode = models.CharField(
         max_length=6,
         validators=[
@@ -41,7 +44,9 @@ class UserRegisteration(models.Model):
                 regex=r'^\d{6}$',
                 message='Pincode must be exactly 6 digits'
             )
-        ]
+        ],
+        blank=True,
+        null=True
     )
     
     # Profile Picture
@@ -67,13 +72,19 @@ class UserRegisteration(models.Model):
     @property
     def full_address(self):
         """Return formatted full address"""
-        return f"{self.door_no}, {self.street}, {self.landmark}, {self.city}, {self.state} - {self.pincode}"
+        parts = [self.door_no, self.street, self.landmark, self.city, self.state]
+        address = ", ".join([p for p in parts if p])
+        if self.pincode:
+            address += f" - {self.pincode}"
+        return address or "No address provided"
     
     @property
     def display_phone(self):
         """Return formatted phone number"""
         phone_str = str(self.phone)
-        return f"+91 {phone_str[:5]} {phone_str[5:]}"
+        if len(phone_str) >= 10:
+            return f"+91 {phone_str[-10:-5]} {phone_str[-5:]}"
+        return phone_str
     
     def get_profile_picture_url(self):
         """Return profile picture URL or default"""
@@ -100,7 +111,7 @@ def create_user_profile(sender, instance, created, **kwargs):
                 'landmark': '',
                 'city': '',
                 'state': '',
-                'pincode': '000000',
+                'pincode': '',
             }
         )
 
@@ -122,5 +133,5 @@ def save_user_profile(sender, instance, **kwargs):
             landmark='',
             city='',
             state='',
-            pincode='000000'
+            pincode=''
         )
