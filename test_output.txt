@@ -1,0 +1,1470 @@
+﻿python : Creating test 
+database for alias 
+'default' ('file:memory
+db_default?mode=memory&
+cache=shared')...
+At line:1 char:1
++ python manage.py 
+test btmapp carsapp 
+rentalcars -v 2 2>&1 | 
+Out-File  ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Creating test   
+  d...che=shared').    
+..:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+
+Found 48 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: crispy_bootstrap5, crispy_forms, django_auto_logout, django_recaptcha, messages, staticfiles
+  Apply all migrations: admin, auth, btmapp, carsapp, contenttypes, rentalcars, sessions
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying btmapp.0001_initial... OK
+  Applying carsapp.0001_initial... OK
+  Applying rentalcars.0001_initial... OK
+test_authenticated_user
+_redirected_from_login 
+(btmapp.tests.AuthViewT
+est.test_authenticated_
+user_redirected_from_lo
+gin)
+Already authenticated 
+users should be 
+redirected from login 
+page. ... C:\Users\dash
+p\AppData\Local\Program
+s\Python\Python311\Lib\
+site-packages\django\co
+re\handlers\base.py:61:
+ UserWarning: No 
+directory at: C:\Users\
+dashp\dj1\djbtm2\static
+files\
+  mw_instance = middlew
+are(adapted_handler)
+ok
+test_home_page_loads (b
+tmapp.tests.AuthViewTes
+t.test_home_page_loads)
+Home page should load 
+for anonymous users. 
+... ok
+test_login_failure (btm
+app.tests.AuthViewTest.
+test_login_failure)
+Invalid credentials 
+should show error. ... 
+Failed login attempt 
+for username: testuser
+ERROR
+test_login_page_loads (
+btmapp.tests.AuthViewTe
+st.test_login_page_load
+s)
+Login page should load 
+for anonymous users. 
+... ERROR
+test_login_success (btm
+app.tests.AuthViewTest.
+test_login_success)
+Valid credentials 
+should log the user 
+in. ... ok
+test_logout (btmapp.tes
+ts.AuthViewTest.test_lo
+gout)
+Logout should redirect 
+to login page. ... ok
+test_password_reset_pag
+e_loads (btmapp.tests.A
+uthViewTest.test_passwo
+rd_reset_page_loads)
+Password reset page 
+should be accessible. 
+... ok
+test_profile_loads_for_
+authenticated (btmapp.t
+ests.AuthViewTest.test_
+profile_loads_for_authe
+nticated)
+Profile page should 
+load for authenticated 
+users. ... ok
+test_profile_requires_l
+ogin (btmapp.tests.Auth
+ViewTest.test_profile_r
+equires_login)
+Profile page should 
+redirect anonymous 
+users to login. ... ok
+test_registration_page_
+loads (btmapp.tests.Aut
+hViewTest.test_registra
+tion_page_loads)
+Registration page 
+should load for 
+anonymous users. ... ok
+test_duplicate_email (b
+tmapp.tests.UserFormTes
+t.test_duplicate_email)
+Form should reject 
+duplicate emails. ... 
+ok
+test_duplicate_username
+ (btmapp.tests.UserForm
+Test.test_duplicate_use
+rname)
+Form should reject 
+duplicate usernames. 
+... ok
+test_password_mismatch 
+(btmapp.tests.UserFormT
+est.test_password_misma
+tch)
+Form should reject 
+mismatched passwords. 
+... ok
+test_valid_registration
+ (btmapp.tests.UserForm
+Test.test_valid_registr
+ation)
+Form should be valid 
+with correct data. ... 
+ok
+test_weak_password (btm
+app.tests.UserFormTest.
+test_weak_password)
+Form should reject 
+weak passwords. ... ok
+test_display_phone_empt
+y (btmapp.tests.UserReg
+istrationModelTest.test
+_display_phone_empty)
+display_phone should 
+handle empty phone 
+gracefully. ... ok
+test_display_phone_form
+atted (btmapp.tests.Use
+rRegistrationModelTest.
+test_display_phone_form
+atted)
+display_phone should 
+format a 10-digit 
+phone number. ... ok
+test_full_address_empty
+ (btmapp.tests.UserRegi
+strationModelTest.test_
+full_address_empty)
+full_address should 
+return default when no 
+fields are set. ... ok
+test_full_address_with_
+all_fields (btmapp.test
+s.UserRegistrationModel
+Test.test_full_address_
+with_all_fields)
+full_address should 
+format all parts 
+correctly. ... ok
+test_profile_created_on
+_user_creation (btmapp.
+tests.UserRegistrationM
+odelTest.test_profile_c
+reated_on_user_creation
+)
+Signal should 
+auto-create a profile 
+when a User is 
+created. ... ok
+test_profile_str_repres
+entation (btmapp.tests.
+UserRegistrationModelTe
+st.test_profile_str_rep
+resentation)
+Profile __str__ should 
+return '<username>'s 
+Profile'. ... ok
+test_company_details_lo
+ads (carsapp.tests.Cars
+appViewTest.test_compan
+y_details_loads)
+Company details page 
+should load. ... ok
+test_company_list_loads
+ (carsapp.tests.Carsapp
+ViewTest.test_company_l
+ist_loads)
+Company list page 
+should load. ... ok
+test_emi_requires_login
+ (carsapp.tests.Carsapp
+ViewTest.test_emi_requi
+res_login)
+EMI calculator should 
+require 
+authentication. ... ok
+test_final_price_loads 
+(carsapp.tests.CarsappV
+iewTest.test_final_pric
+e_loads)
+Final price page 
+should load. ... ok
+test_product_detail_loa
+ds (carsapp.tests.Carsa
+ppViewTest.test_product
+_detail_loads)
+Product detail page 
+should load. ... ERROR
+test_company_creation (
+carsapp.tests.CompanyMo
+delTest.test_company_cr
+eation)
+Company should be 
+created with all 
+required fields. ... ok
+test_company_str (carsa
+pp.tests.CompanyModelTe
+st.test_company_str)
+Company __str__ should 
+return the name. ... ok
+test_product_creation (
+carsapp.tests.ProductMo
+delTest.test_product_cr
+eation)
+Product should be 
+created and associated 
+with a company. ... ok
+test_product_price_brea
+kdown (carsapp.tests.Pr
+oductModelTest.test_pro
+duct_price_breakdown)
+Final price view 
+should calculate tax 
+breakdown correctly. 
+... ok
+test_final_rent_basic (
+rentalcars.tests.FinalR
+entCalculationTest.test
+_final_rent_basic)
+Final rent should 
+calculate correctly. 
+... ok
+test_final_rent_returns
+_fuel_price (rentalcars
+.tests.FinalRentCalcula
+tionTest.test_final_ren
+t_returns_fuel_price)
+Result should include 
+fuel price estimation. 
+... ok
+test_case_insensitive_f
+uel_type (rentalcars.te
+sts.PricingServiceTest.
+test_case_insensitive_f
+uel_type)
+Fuel type matching 
+should be 
+case-insensitive. ... 
+ok
+test_default_fuel_rate 
+(rentalcars.tests.Prici
+ngServiceTest.test_defa
+ult_fuel_rate)
+Unknown fuel types 
+should return default 
+rate 100. ... ok
+test_default_rate (rent
+alcars.tests.PricingSer
+viceTest.test_default_r
+ate)
+Unknown fuel types 
+should return default 
+rate of 10. ... ok
+test_diesel_5_seater_ra
+te (rentalcars.tests.Pr
+icingServiceTest.test_d
+iesel_5_seater_rate)
+Diesel 5-seater should 
+have rate of 9. ... ok
+test_diesel_7_seater_ra
+te (rentalcars.tests.Pr
+icingServiceTest.test_d
+iesel_7_seater_rate)
+Diesel 7-seater should 
+have rate of 14. ... ok
+test_diesel_fuel_rate (
+rentalcars.tests.Pricin
+gServiceTest.test_diese
+l_fuel_rate)
+Diesel fuel rate 
+should be 96. ... ok
+test_petrol_5_seater_ra
+te (rentalcars.tests.Pr
+icingServiceTest.test_p
+etrol_5_seater_rate)
+Petrol 5-seater should 
+have rate of 11. ... ok
+test_petrol_7_seater_ra
+te (rentalcars.tests.Pr
+icingServiceTest.test_p
+etrol_7_seater_rate)
+Petrol 7-seater should 
+have rate of 16. ... ok
+test_petrol_fuel_rate (
+rentalcars.tests.Pricin
+gServiceTest.test_petro
+l_fuel_rate)
+Petrol fuel rate 
+should be 102. ... ok
+test_estimation_above_m
+inimum (rentalcars.test
+s.RentEstimationTest.te
+st_estimation_above_min
+imum)
+Expected km above 
+minimum should be used 
+as-is. ... ok
+test_estimation_minimum
+_km (rentalcars.tests.R
+entEstimationTest.test_
+estimation_minimum_km)
+Estimation should 
+enforce minimum km 
+(300/day). ... ok
+test_estimation_no_expe
+cted_km (rentalcars.tes
+ts.RentEstimationTest.t
+est_estimation_no_expec
+ted_km)
+No expected km should 
+fall back to minimum. 
+... ok
+test_estimation_total_r
+ent (rentalcars.tests.R
+entEstimationTest.test_
+estimation_total_rent)
+Total rent should be 
+km * rate. ... ok
+test_rental_detail_load
+s (rentalcars.tests.Ren
+talViewTest.test_rental
+_detail_loads)
+Rental detail page 
+should load. ... ok
+test_rental_home_loads 
+(rentalcars.tests.Renta
+lViewTest.test_rental_h
+ome_loads)
+Rental home page 
+should load. ... ok
+test_rental_list_loads 
+(rentalcars.tests.Renta
+lViewTest.test_rental_l
+ist_loads)
+Rental list should 
+load for a given seat 
+capacity. ... ok
+
+=======================
+=======================
+=======================
+=
+ERROR: 
+test_login_failure (btm
+app.tests.AuthViewTest.
+test_login_failure)
+Invalid credentials 
+should show error.
+-----------------------
+-----------------------
+-----------------------
+-
+Traceback (most recent 
+call last):
+  File "C:\Users\dashp\
+dj1\djbtm2\btmapp\tests
+.py", line 149, in 
+test_login_failure
+    response = self.cli
+ent.post(reverse('login
+'), {
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1153, in post
+    response = 
+super().post(
+               
+^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 499, 
+in post
+    return 
+self.generic(
+           
+^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 671, 
+in generic
+    return 
+self.request(**r)
+           
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1087, in request
+    self.check_exceptio
+n(response)
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 802, 
+in check_exception
+    raise exc_value
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\exception.py"
+, line 55, in inner
+    response = 
+get_response(request)
+               
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\base.py", 
+line 197, in 
+_get_response
+    response = wrapped_
+callback(request, 
+*callback_args, 
+**callback_kwargs)
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "C:\Users\dashp\
+dj1\djbtm2\btmapp\views
+.py", line 107, in 
+user_login
+    return 
+render(request, 
+"login.html", {})
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\shor
+tcuts.py", line 25, in 
+render
+    content = loader.re
+nder_to_string(template
+_name, context, 
+request, using=using)
+              ^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader.py", line 
+62, in render_to_string
+    return template.ren
+der(context, request)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\backends\django.py
+", line 107, in render
+    return self.templat
+e.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+171, in render
+    return 
+self._render(context)
+           
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 159, in render
+    return compiled_par
+ent._render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 65, in render
+    result = block.node
+list.render(context)
+             ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\defaulttags.py", 
+line 480, in render
+    url = 
+reverse(view_name, 
+args=args, 
+kwargs=kwargs, current_
+app=current_app)
+          ^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\base.py", line 98, in 
+reverse
+    resolved_url = reso
+lver._reverse_with_pref
+ix(view, prefix, 
+*args, **kwargs)
+                   ^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\resolvers.py", line 
+831, in 
+_reverse_with_prefix
+    raise 
+NoReverseMatch(msg)
+django.urls.exceptions.
+NoReverseMatch: 
+Reverse for 
+'passwordreset' not 
+found. 'passwordreset' 
+is not a valid view 
+function or pattern 
+name.
+
+=======================
+=======================
+=======================
+=
+ERROR: 
+test_login_page_loads (
+btmapp.tests.AuthViewTe
+st.test_login_page_load
+s)
+Login page should load 
+for anonymous users.
+-----------------------
+-----------------------
+-----------------------
+-
+Traceback (most recent 
+call last):
+  File "C:\Users\dashp\
+dj1\djbtm2\btmapp\tests
+.py", line 136, in 
+test_login_page_loads
+    response = self.cli
+ent.get(reverse('login'
+))
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1124, in get
+    response = 
+super().get(
+               
+^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 475, 
+in get
+    return 
+self.generic(
+           
+^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 671, 
+in generic
+    return 
+self.request(**r)
+           
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1087, in request
+    self.check_exceptio
+n(response)
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 802, 
+in check_exception
+    raise exc_value
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\exception.py"
+, line 55, in inner
+    response = 
+get_response(request)
+               
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\base.py", 
+line 197, in 
+_get_response
+    response = wrapped_
+callback(request, 
+*callback_args, 
+**callback_kwargs)
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "C:\Users\dashp\
+dj1\djbtm2\btmapp\views
+.py", line 107, in 
+user_login
+    return 
+render(request, 
+"login.html", {})
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\shor
+tcuts.py", line 25, in 
+render
+    content = loader.re
+nder_to_string(template
+_name, context, 
+request, using=using)
+              ^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader.py", line 
+62, in render_to_string
+    return template.ren
+der(context, request)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\backends\django.py
+", line 107, in render
+    return self.templat
+e.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+171, in render
+    return 
+self._render(context)
+           
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 159, in render
+    return compiled_par
+ent._render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 65, in render
+    result = block.node
+list.render(context)
+             ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\defaulttags.py", 
+line 480, in render
+    url = 
+reverse(view_name, 
+args=args, 
+kwargs=kwargs, current_
+app=current_app)
+          ^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\base.py", line 98, in 
+reverse
+    resolved_url = reso
+lver._reverse_with_pref
+ix(view, prefix, 
+*args, **kwargs)
+                   ^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\resolvers.py", line 
+831, in 
+_reverse_with_prefix
+    raise 
+NoReverseMatch(msg)
+django.urls.exceptions.
+NoReverseMatch: 
+Reverse for 
+'passwordreset' not 
+found. 'passwordreset' 
+is not a valid view 
+function or pattern 
+name.
+
+=======================
+=======================
+=======================
+=
+ERROR: test_product_det
+ail_loads (carsapp.test
+s.CarsappViewTest.test_
+product_detail_loads)
+Product detail page 
+should load.
+-----------------------
+-----------------------
+-----------------------
+-
+Traceback (most recent 
+call last):
+  File "C:\Users\dashp\
+dj1\djbtm2\carsapp\test
+s.py", line 118, in tes
+t_product_detail_loads
+    response = self.cli
+ent.get(reverse('produc
+t_detail', args=[self.p
+roduct.id]))
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1124, in get
+    response = 
+super().get(
+               
+^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 475, 
+in get
+    return 
+self.generic(
+           
+^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 671, 
+in generic
+    return 
+self.request(**r)
+           
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 
+1087, in request
+    self.check_exceptio
+n(response)
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\client.py", line 802, 
+in check_exception
+    raise exc_value
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\exception.py"
+, line 55, in inner
+    response = 
+get_response(request)
+               
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\core
+\handlers\base.py", 
+line 197, in 
+_get_response
+    response = wrapped_
+callback(request, 
+*callback_args, 
+**callback_kwargs)
+               ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "C:\Users\dashp\
+dj1\djbtm2\carsapp\view
+s.py", line 62, in 
+product_detail
+    return 
+render(request, "cars/p
+roduct_detail.html", {
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\shor
+tcuts.py", line 25, in 
+render
+    content = loader.re
+nder_to_string(template
+_name, context, 
+request, using=using)
+              ^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader.py", line 
+62, in render_to_string
+    return template.ren
+der(context, request)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\backends\django.py
+", line 107, in render
+    return self.templat
+e.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+171, in render
+    return 
+self._render(context)
+           
+^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+  Applying sessions.0001_initial... OK
+System check identified no issues (0 silenced).
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 159, in render
+    return compiled_par
+ent._render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\test
+\utils.py", line 114, 
+in instrumented_test_re
+nder
+    return self.nodelis
+t.render(context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\loader_tags.py", 
+line 65, in render
+    result = block.node
+list.render(context)
+             ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in render
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+       ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+1016, in <listcomp>
+    return SafeString("
+".join([node.render_ann
+otated(context) for 
+node in self]))
+                       
+        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\base.py", line 
+977, in 
+render_annotated
+    return 
+self.render(context)
+           
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\temp
+late\defaulttags.py", 
+line 480, in render
+    url = 
+reverse(view_name, 
+args=args, 
+kwargs=kwargs, current_
+app=current_app)
+          ^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\base.py", line 98, in 
+reverse
+    resolved_url = reso
+lver._reverse_with_pref
+ix(view, prefix, 
+*args, **kwargs)
+                   ^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+  File "C:\Users\dashp\
+AppData\Local\Programs\
+Python\Python311\Lib\si
+te-packages\django\urls
+\resolvers.py", line 
+831, in 
+_reverse_with_prefix
+    raise 
+NoReverseMatch(msg)
+django.urls.exceptions.
+NoReverseMatch: 
+Reverse for 
+'make_enquiry' with 
+keyword arguments 
+'{'id': 1}' not found. 
+1 pattern(s) tried: 
+['comp/enquiry/\\Z']
+
+-----------------------
+-----------------------
+-----------------------
+-
+Ran 48 tests in 30.466s
+
+FAILED (errors=3)
+Destroying test 
+database for alias 
+'default' ('file:memory
+db_default?mode=memory&
+cache=shared')...
+

@@ -23,12 +23,13 @@ RATING_CHOICES = [
     ("5/5", "5/5"),
 ]
 
+
 class RentalCar(models.Model):
     car_name = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
     color = models.CharField(max_length=50)
     fuel_type = models.CharField(max_length=20, choices=FUEL_CHOICES)
-    milage = models.FloatField(help_text="Mileage (km per litre)")
+    mileage = models.FloatField(help_text="Mileage (km per litre)")
     seat_capacity = models.IntegerField(choices=SEAT_CHOICES)
     transmission_type = models.CharField(max_length=20, choices=TRANSMISSION_CHOICES)
     total_km_driven = models.PositiveIntegerField()

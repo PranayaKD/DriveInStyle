@@ -2,14 +2,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import UserRegisteration
+from .models import UserRegistration
 
 
-class UserRegisterationInline(admin.StackedInline):
+class UserRegistrationInline(admin.StackedInline):
     """
-    Inline admin for UserRegisteration to show in User admin
+    Inline admin for UserRegistration to show in User admin
     """
-    model = UserRegisteration
+    model = UserRegistration
     can_delete = False
     verbose_name_plural = 'Profile Information'
     fk_name = 'user'
@@ -29,17 +29,17 @@ class UserRegisterationInline(admin.StackedInline):
 
 class UserAdmin(BaseUserAdmin):
     """
-    Extended User admin with UserRegisteration inline
+    Extended User admin with UserRegistration inline
     """
-    inlines = (UserRegisterationInline,)
+    inlines = (UserRegistrationInline,)
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'date_joined')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'date_joined')
 
 
-@admin.register(UserRegisteration)
-class UserRegisterationAdmin(admin.ModelAdmin):
+@admin.register(UserRegistration)
+class UserRegistrationAdmin(admin.ModelAdmin):
     """
-    Admin interface for UserRegisteration model
+    Admin interface for UserRegistration model
     """
     list_display = ('user', 'phone', 'city', 'state', 'created_at')
     list_filter = ('state', 'city', 'created_at')

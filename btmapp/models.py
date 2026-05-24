@@ -2,28 +2,33 @@
 # btmapp/models.py
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class UserRegisteration(models.Model):
+class UserRegistration(models.Model):
     """
     Extended user profile model with address and contact information
     """
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name='userregisteration'
+        related_name='profile'
     )
     
     # Contact Information
-    phone = models.PositiveBigIntegerField(
+    phone = models.CharField(
+        max_length=15,
         validators=[
-            MinValueValidator(1000000000, message="Phone number must be 10 digits"),
-            MaxValueValidator(9999999999, message="Phone number must be 10 digits")
+            RegexValidator(
+                regex=r'^\d{10}$',
+                message='Phone number must be exactly 10 digits'
+            )
         ],
-        help_text="10-digit mobile number"
+        help_text="10-digit mobile number",
+        blank=True,
+        default=''
     )
     
     # Address Information
@@ -31,12 +36,12 @@ class UserRegisteration(models.Model):
         max_length=20,
         help_text="Door/House number",
         blank=True,
-        null=True
+        default=''
     )
-    street = models.CharField(max_length=100, blank=True, null=True)
-    landmark = models.CharField(max_length=100, blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    state = models.CharField(max_length=100, blank=True, null=True)
+    street = models.CharField(max_length=100, blank=True, default='')
+    landmark = models.CharField(max_length=100, blank=True, default='')
+    city = models.CharField(max_length=100, blank=True, default='')
+    state = models.CharField(max_length=100, blank=True, default='')
     pincode = models.CharField(
         max_length=6,
         validators=[
@@ -46,7 +51,7 @@ class UserRegisteration(models.Model):
             )
         ],
         blank=True,
-        null=True
+        default=''
     )
     
     # Profile Picture
@@ -81,57 +86,22 @@ class UserRegisteration(models.Model):
     @property
     def display_phone(self):
         """Return formatted phone number"""
-        phone_str = str(self.phone)
-        if len(phone_str) >= 10:
-            return f"+91 {phone_str[-10:-5]} {phone_str[-5:]}"
-        return phone_str
+        if len(self.phone) >= 10:
+            return f"+91 {self.phone[-10:-5]} {self.phone[-5:]}"
+        return self.phone or "Not provided"
     
     def get_profile_picture_url(self):
         """Return profile picture URL or default"""
         if self.userpic:
             return self.userpic.url
-        return '/static/images/default-avatar.png'  # Make sure to add a default image
+        return '/static/images/default-avatar.png'
 
 
-# Signal to create UserRegisteration when User is created
+# Signal to create UserRegistration when User is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     """
-    Automatically create UserRegisteration when a new User is created
-    This helps prevent AttributeError when accessing user.userregisteration
+    Automatically create UserRegistration when a new User is created.
     """
     if created:
-        # Only create if it doesn't exist (prevents duplicate creation)
-        UserRegisteration.objects.get_or_create(
-            user=instance,
-            defaults={
-                'phone': 0,  # Placeholder, should be updated by user
-                'door_no': '',
-                'street': '',
-                'landmark': '',
-                'city': '',
-                'state': '',
-                'pincode': '',
-            }
-        )
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """
-    Save UserRegisteration when User is saved
-    """
-    # Try to save if it exists, create if it doesn't
-    try:
-        instance.userregisteration.save()
-    except UserRegisteration.DoesNotExist:
-        UserRegisteration.objects.create(
-            user=instance,
-            phone=0,
-            door_no='',
-            street='',
-            landmark='',
-            city='',
-            state='',
-            pincode=''
-        )
+        UserRegistration.objects.get_or_create(user=instance)

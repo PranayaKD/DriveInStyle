@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en" class="lenis">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drive In Style</title>
+  <title>Rentora - Premium Car Rental</title>
   <meta name="description"
-    content="Drive In Style - Premium car buying and rental service. Luxury, comfort & performance all in one place." />
+    content="Rentora - Your Journey, Your Way. Premium car rental and buying experience with world-class fleet." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -22,64 +20,123 @@
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
 
-  <!-- Custom Modern Styles -->
+  <!-- Custom Modern Styles (Design System) -->
   <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  
+  <style>
+    /* Navbar specific overrides for new UI */
+    .rentora-nav {
+      background: rgba(10, 15, 30, 0.8) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 1rem 0;
+      transition: var(--transition-smooth);
+    }
+    .rentora-nav.scrolled {
+      padding: 0.5rem 0;
+      background: rgba(10, 15, 30, 0.95) !important;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .navbar-brand {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--c-white) !important;
+    }
+    .navbar-brand i { color: var(--c-teal-accent); }
+    .nav-link {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--c-gray-300) !important;
+      transition: var(--transition-smooth);
+    }
+    .nav-link:hover {
+      color: var(--c-white) !important;
+    }
+    
+    /* Footer */
+    .rentora-footer {
+      background: var(--c-navy-surface);
+      padding: 80px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--c-white);
+      margin-bottom: 1.5rem;
+    }
+    .footer-link {
+      color: var(--c-gray-400);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .footer-link:hover {
+      color: var(--c-teal-accent);
+    }
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      color: var(--c-white);
+      margin-right: 0.5rem;
+      transition: var(--transition-smooth);
+    }
+    .social-icon:hover {
+      background: var(--c-teal-accent);
+      color: var(--c-navy-bg);
+      transform: translateY(-3px);
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Animated Background -->
-  <div class="animated-bg"></div>
-
   <!-- Page Loader -->
-  <div class="page-loader" id="pageLoader">
-    <div class="loader-spinner"></div>
+  <div class="page-loader" id="pageLoader" style="position: fixed; top:0; left:0; width:100%; height:100%; background: var(--c-navy-bg); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
+    <div class="spinner-border text-teal" role="status" style="color: var(--c-teal-accent);">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-modern shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark rentora-nav fixed-top" id="rentoraNav">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">
-        <i class="bi bi-car-front-fill"></i>
-        <span>Drive In Style</span>
+        <i class="bi bi-heptagon-fill me-1"></i>Rentora
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center">
+        <ul class="navbar-nav mx-auto align-items-lg-center">
+          <li class="nav-item mx-2"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+          <li class="nav-item mx-2"><a href="{% url 'rental_home' %}" class="nav-link">Fleet & Rentals</a></li>
+          <li class="nav-item mx-2"><a href="{% url 'company' %}" class="nav-link">Buy Cars</a></li>
+        </ul>
+        
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
           {% if user.is_authenticated %}
-          <li class="nav-item mx-2">
-            <a href="{% url 'home' %}" class="nav-link">
-              <i class="bi bi-house-door me-1"></i> Home
-            </a>
+          <li class="nav-item">
+            <a href="{% url 'profile' %}" class="nav-link"><i class="bi bi-person-circle me-1"></i> {{ user.username }}</a>
           </li>
-          <li class="nav-item mx-2">
-            <a href="{% url 'profile' %}" class="nav-link">
-              <i class="bi bi-person me-1"></i> Profile
-            </a>
-          </li>
-          <li class="nav-item mx-2">
-            <a href="{% url 'company' %}" class="nav-link">
-              <i class="bi bi-building me-1"></i> Company
-            </a>
-          </li>
-          <li class="nav-item mx-2">
-            <a href="{% url 'logout' %}" class="btn btn-outline-glow btn-modern px-4">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
+          <li class="nav-item">
+            <a href="{% url 'logout' %}" class="btn btn-outline-light rounded-pill px-4 ms-lg-2">Logout</a>
           </li>
           {% else %}
-          <li class="nav-item mx-2">
-            <a href="{% url 'register' %}" class="btn btn-glass btn-modern px-4">
-              <i class="bi bi-person-plus"></i> Register
-            </a>
+          <li class="nav-item">
+            <a href="{% url 'login' %}" class="nav-link">Log In</a>
           </li>
-          <li class="nav-item mx-2">
-            <a href="{% url 'login' %}" class="btn btn-gradient-primary btn-modern px-4">
-              <i class="bi bi-box-arrow-in-right"></i> Login
-            </a>
+          <li class="nav-item">
+            <a href="{% url 'register' %}" class="btn btn-teal-pill px-4 ms-lg-2">Sign Up</a>
           </li>
           {% endif %}
         </ul>
@@ -89,60 +146,69 @@
 
   <!-- Messages Display -->
   {% if messages %}
-  <div class="container mt-4">
+  <div class="container mt-5 pt-5" style="position: relative; z-index: 1000;">
     {% for message in messages %}
-    <div
-      class="alert-modern {% if message.tags == 'success' %}alert-success-modern{% elif message.tags == 'error' %}alert-danger-modern{% elif message.tags == 'warning' %}alert-warning-modern{% else %}alert-info-modern{% endif %}"
-      role="alert">
-      <i
-        class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% elif message.tags == 'error' %}bi-exclamation-circle-fill{% elif message.tags == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+    <div class="alert alert-dismissible fade show border-0 shadow-sm {% if message.tags == 'success' %}bg-teal text-dark{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %}" role="alert" style="border-radius: 12px; font-weight: 500;">
+      <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% elif message.tags == 'error' %}bi-exclamation-circle-fill{% elif message.tags == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %} me-2"></i>
       {{ message }}
+      <button type="button" class="btn-close {% if message.tags == 'success' %}btn-close-dark{% endif %}" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}
   </div>
   {% endif %}
 
   <!-- Page Content -->
-  <main class="container my-5">
+  <main>
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Footer -->
-  <footer class="footer-modern text-center">
+  <!-- Premium Footer -->
+  <footer class="rentora-footer">
     <div class="container">
-      <div class="row mb-4">
-        <div class="col-md-4 mb-3 mb-md-0">
-          <h5 class="text-white mb-3">
-            <i class="bi bi-car-front-fill text-info me-2"></i>Drive In Style
-          </h5>
-          <p class="small mb-0">Premium car buying and rental service. Experience luxury, comfort & performance.</p>
-        </div>
-        <div class="col-md-4 mb-3 mb-md-0">
-          <h6 class="text-white mb-3">Quick Links</h6>
-          <a href="{% url 'home' %}" class="d-block mb-2">Home</a>
-          <a href="{% url 'company' %}" class="d-block mb-2">Browse Cars</a>
-          <a href="{% url 'rental_home' %}" class="d-block">Rent a Car</a>
-        </div>
-        <div class="col-md-4">
-          <h6 class="text-white mb-3">Connect With Us</h6>
-          <div class="footer-social">
-            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4 col-md-6">
+          <a class="navbar-brand mb-4 d-inline-block" href="{% url 'home' %}">
+            <i class="bi bi-heptagon-fill me-1"></i>Rentora
+          </a>
+          <p style="color: var(--c-gray-400); max-width: 300px;">
+            Your Journey, Your Way. Premium car rental and buying experience with a world-class fleet, fast booking, and 24/7 support.
+          </p>
+          <div class="mt-4">
+            <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
           </div>
         </div>
+        
+        <div class="col-lg-2 col-md-3 col-6">
+          <h5 class="footer-title">Quick Links</h5>
+          <a href="{% url 'home' %}" class="footer-link">Home</a>
+          <a href="{% url 'rental_home' %}" class="footer-link">Rent a Car</a>
+          <a href="{% url 'company' %}" class="footer-link">Buy a Car</a>
+          <a href="#" class="footer-link">Special Offers</a>
+        </div>
+        
+        <div class="col-lg-2 col-md-3 col-6">
+          <h5 class="footer-title">Support</h5>
+          <a href="#" class="footer-link">Help Center</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+          <h5 class="footer-title">Subscribe to Newsletter</h5>
+          <p style="color: var(--c-gray-400);">Get the latest updates and exclusive offers directly to your inbox.</p>
+          <form class="d-flex mt-3" style="background: rgba(255,255,255,0.05); padding: 5px; border-radius: var(--border-radius-full);">
+            <input type="email" class="form-control border-0 bg-transparent text-white shadow-none ps-3" placeholder="Email address" required>
+            <button class="btn btn-teal-pill px-4 m-1" type="button">Subscribe</button>
+          </form>
+        </div>
       </div>
-      <hr style="border-color: rgba(255,255,255,0.1);">
-      <div class="row align-items-center">
-        <div class="col-md-6 text-md-start mb-2 mb-md-0">
-          <p class="mb-0 small">© 2025 Drive In Style. All Rights Reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <a href="#" class="small me-3">Privacy Policy</a>
-          <a href="#" class="small me-3">Terms of Service</a>
-          <a href="#" class="small">Support</a>
-        </div>
+      
+      <div class="pt-4 mt-4 text-center" style="border-top: 1px solid rgba(255,255,255,0.05);">
+        <p class="mb-0 text-muted small">© 2026 Rentora. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -150,17 +216,28 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Page Loader Script -->
+  <!-- Global Scripts -->
   <script>
+    // Page Loader
     window.addEventListener('load', function () {
       const loader = document.getElementById('pageLoader');
       if (loader) {
         setTimeout(function () {
-          loader.classList.add('hidden');
-        }, 300);
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }, 400);
+      }
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('rentoraNav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
       }
     });
   </script>
 </body>
-
 </html>

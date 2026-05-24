@@ -1,9 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from .models import RentalCar
-from btmapp.utils import send_email_view
+from .services import estimate_rent, calculate_final_rent
+from btmapp.utils import send_rental_bill_email
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def rental_home(request):
     return render(request, "rentalcars/rentalcar.html")
+
 
 def rental_list(request, seat_capacity):
     cars = RentalCar.objects.filter(seat_capacity=seat_capacity)
@@ -12,134 +18,61 @@ def rental_list(request, seat_capacity):
         "seat_capacity": seat_capacity
     })
 
+
 def rental_detail(request, car_id):
     car = get_object_or_404(RentalCar, id=car_id)
     return render(request, "rentalcars/rental_details.html", {"car": car})
 
-def rent_now(request,car_id):
-    car = get_object_or_404(RentalCar,id =car_id)
-    return render(request,"rentalcars/rent_now.html",{"car": car})
+
+def rent_now(request, car_id):
+    car = get_object_or_404(RentalCar, id=car_id)
+    return render(request, "rentalcars/rent_now.html", {"car": car})
+
 
 def calculate_rent(request, car_id):
     car = get_object_or_404(RentalCar, id=car_id)
 
     if request.method == 'POST':
-        days = int(request.POST.get('days'))
+        days = int(request.POST.get('days', 1))
         expected_km = request.POST.get('expected_km')
-        min_km = days * 300  
+        expected_km = int(expected_km) if expected_km else None
 
-        if expected_km:
-            total_km = int(expected_km)
-            if total_km < min_km:
-                total_km = min_km
-        else:
-            total_km = min_km
-
-        fuel_type = (car.fuel_type or '').strip().lower()
-
-        if fuel_type == 'petrol':
-            if car.seat_capacity == 5:
-                rate = 11
-            elif car.seat_capacity == 7:
-                rate = 16
-            else:
-                rate = 16
-        elif fuel_type == 'diesel':
-            if car.seat_capacity == 5:
-                rate = 9
-            elif car.seat_capacity == 7:
-                rate = 14
-            else:
-                rate = 14
-        else:
-            rate = 10  
-
-        total_rent = total_km * rate
+        result = estimate_rent(car, days, expected_km)
 
         context = {
             "car": car,
-            "days": days,
-            "except_km": total_km,
-            "km": rate,
-            "fp": total_rent,
-            "ca": True,
+            "days": result['days'],
+            "expected_km": result['expected_km'],
+            "rate_per_km": result['rate_per_km'],
+            "total_rent": result['total_rent'],
+            "calculated": True,
         }
         return render(request, "rentalcars/rent_result.html", context)
+
+    return render(request, "rentalcars/rent_result.html", {"car": car})
+
+
 def final_rent_price(request, car_id):
     car = get_object_or_404(RentalCar, id=car_id)
     user_email = None
     if request.user.is_authenticated:
         user_email = request.user.email
+
     if request.method == 'POST':
         days = int(request.POST.get('days', 1))
-        km_now = int(request.POST.get('exp_km', 0))
-        total_km_driven = car.total_km_driven or 0
-        fuel_type = (car.fuel_type or '').strip().lower()
-        if fuel_type == 'petrol':
-            if car.seat_capacity == 5:
-                price_per_km = 11
-            elif car.seat_capacity == 7:
-                price_per_km = 16
-            else:
-                price_per_km = 16
-        elif fuel_type == 'diesel':
-            if car.seat_capacity == 5:
-                price_per_km = 9
-            elif car.seat_capacity == 7:
-                price_per_km = 14
-            else:
-                price_per_km = 14
-        else:
-            price_per_km = 10
+        current_km = int(request.POST.get('exp_km', 0))
 
-        km_diff = km_now - total_km_driven
-        
-        # Enforce minimum rental distance (300km per day) consistent with estimation
-        min_km = days * 300
-        chargeable_km = max(km_diff, min_km)
-        
-        accumulated_price = chargeable_km * price_per_km
+        result = calculate_final_rent(car, days, current_km)
 
-        allowed_km = days * 300
-        extra_km = km_diff - allowed_km
-
-        if extra_km < 500:
-            accumulated_price += accumulated_price * 0.02
-        else:
-            accumulated_price += accumulated_price * 0.04
-
-        milage = getattr(car, 'milage', 15) 
-        fuel_type = (car.fuel_type or '').strip().lower()
-        if fuel_type == 'petrol':
-            fuel_rate = 102
-        elif fuel_type == 'diesel':
-            fuel_rate = 96
-        else:
-            fuel_rate = 100
-
-        fuel_price = (km_diff / milage) * fuel_rate if milage else 0
-
-        # Final price is the accumulated rental cost (fuel is paid by user)
-        final_price = accumulated_price
-        
-        send_email_view(user_email, car.car_name, km_now, final_price)
-        print("Email sent")
-        
+        # Send billing email
+        send_rental_bill_email(user_email, car.car_name, current_km, result['final_price'])
+        logger.info(f"Rental bill email sent for {car.car_name} to {user_email}")
 
         context = {
             "car": car,
-            "days": days,
-            "total_km": km_diff,
-            "rate": price_per_km,
-            "accumulated_price": accumulated_price,
-            "fuel_price": fuel_price,
-            "final_price": final_price, 
+            **result,
             "user_email": user_email,
-        
         }
-        
         return render(request, "rentalcars/final_price_checkout.html", context)
 
     return render(request, "rentalcars/final_price_checkout.html", {"car": car, "user_email": user_email})
-
-

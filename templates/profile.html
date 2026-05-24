@@ -7,8 +7,8 @@
     <div class="profile-header">
       <div class="row align-items-center">
         <div class="col-md-4 text-center mb-4 mb-md-0">
-          {% if user.userregisteration.userpic %}
-          <img src="{{ user.userregisteration.userpic.url }}" alt="{{ user.username }}'s profile picture"
+          {% if user.profile.userpic %}
+          <img src="{{ user.profile.userpic.url }}" alt="{{ user.username }}'s profile picture"
             class="profile-avatar" />
           {% else %}
           <div class="profile-avatar d-flex align-items-center justify-content-center"
@@ -43,7 +43,7 @@
             <span class="info-label">
               <i class="bi bi-phone me-2"></i>Phone
             </span>
-            <span class="info-value">{{ user.userregisteration.phone|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.phone|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
@@ -64,42 +64,42 @@
             <span class="info-label">
               <i class="bi bi-door-open me-2"></i>Door No.
             </span>
-            <span class="info-value">{{ user.userregisteration.door_no|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.door_no|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
             <span class="info-label">
               <i class="bi bi-signpost me-2"></i>Street
             </span>
-            <span class="info-value">{{ user.userregisteration.street|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.street|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
             <span class="info-label">
               <i class="bi bi-pin-map me-2"></i>Landmark
             </span>
-            <span class="info-value">{{ user.userregisteration.landmark|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.landmark|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
             <span class="info-label">
               <i class="bi bi-building me-2"></i>City
             </span>
-            <span class="info-value">{{ user.userregisteration.city|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.city|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
             <span class="info-label">
               <i class="bi bi-map me-2"></i>State
             </span>
-            <span class="info-value">{{ user.userregisteration.state|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.state|default:"Not provided" }}</span>
           </div>
 
           <div class="info-row">
             <span class="info-label">
               <i class="bi bi-mailbox me-2"></i>Pincode
             </span>
-            <span class="info-value">{{ user.userregisteration.pincode|default:"Not provided" }}</span>
+            <span class="info-value">{{ user.profile.pincode|default:"Not provided" }}</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
           <a href="{% url 'rental_home' %}" class="btn btn-glass btn-modern">
             <i class="bi bi-key"></i> Rent a Car
           </a>
-          <a href="{% url 'passwordreset' %}" class="btn btn-glass btn-modern">
+          <a href="{% url 'password_reset' %}" class="btn btn-glass btn-modern">
             <i class="bi bi-shield-lock"></i> Change Password
           </a>
         </div>

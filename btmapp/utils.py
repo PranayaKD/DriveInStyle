@@ -11,9 +11,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def send_email_view(email, car_name, exp_km, final_price):
+def send_rental_bill_email(email, car_name, exp_km, final_price):
     """
-    Send rental bill email to customer
+    Send rental bill email to customer.
     
     Args:
         email (str): Customer email address
@@ -63,99 +63,4 @@ def send_email_view(email, car_name, exp_km, final_price):
         
     except Exception as e:
         logger.error(f"Failed to send email to {email}: {str(e)}")
-        return False
-
-
-def send_welcome_email(user_email, username):
-    """
-    Send welcome email to newly registered users
-    
-    Args:
-        user_email (str): User's email address
-        username (str): User's username
-        
-    Returns:
-        bool: True if email sent successfully
-    """
-    try:
-        subject = 'Welcome to CarRental - Drive Your Dreams!'
-        from_email = settings.DEFAULT_FROM_EMAIL
-        
-        # You can create a welcome email template
-        message = f"""
-        Dear {username},
-        
-        Welcome to CarRental! We're excited to have you on board.
-        
-        You can now:
-        - Browse our extensive fleet of vehicles
-        - Book cars for rent
-        - Purchase your dream car
-        - Track your bookings
-        
-        If you have any questions, feel free to contact our support team.
-        
-        Happy driving!
-        
-        Best regards,
-        The CarRental Team
-        """
-        
-        from django.core.mail import send_mail
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=from_email,
-            recipient_list=[user_email],
-            fail_silently=True
-        )
-        
-        logger.info(f"Welcome email sent to {user_email}")
-        return True
-        
-    except Exception as e:
-        logger.error(f"Failed to send welcome email to {user_email}: {str(e)}")
-        return False
-
-
-def send_password_reset_notification(user_email, username):
-    """
-    Send notification when password is reset
-    
-    Args:
-        user_email (str): User's email address
-        username (str): User's username
-        
-    Returns:
-        bool: True if email sent successfully
-    """
-    try:
-        subject = 'Password Reset Successful - CarRental'
-        from_email = settings.DEFAULT_FROM_EMAIL
-        
-        message = f"""
-        Dear {username},
-        
-        Your password has been reset successfully.
-        
-        If you did not make this change, please contact our support team immediately.
-        
-        Best regards,
-        The CarRental Team
-        """
-        
-        from django.core.mail import send_mail
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=from_email,
-            recipient_list=[user_email],
-            fail_silently=True
-        )
-        
-        logger.info(f"Password reset notification sent to {user_email}")
-        return True
-        
-    except Exception as e:
-        logger.error(f"Failed to send password reset notification to {user_email}: {str(e)}")
         return False

@@ -1,190 +1,314 @@
 {% extends 'navbar.html' %}
 {% load static %}
+
 {% block content %}
+<!-- Lenis & GSAP Scripts -->
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <!-- Hero Section -->
-<section class="hero-section text-center text-white py-5 mb-5"
-  style="margin-top: -3rem; margin-left: -0.75rem; margin-right: -0.75rem; width: calc(100% + 1.5rem);">
-  <div class="container position-relative" style="z-index: 2;">
-    <h1 class="hero-title text-glow mb-4 animate-fade-in">Welcome to Drive In Style</h1>
-    <p class="hero-subtitle mb-5 animate-fade-in" style="animation-delay: 0.2s;">
-      Luxury, Comfort & Performance — all in one place. Experience the thrill of driving premium vehicles.
-    </p>
-    <div class="d-flex justify-content-center gap-3 flex-wrap animate-fade-in" style="animation-delay: 0.4s;">
-      <a href="{% url 'company' %}" class="btn btn-gradient-primary btn-modern px-5 py-3">
-        <i class="bi bi-car-front-fill me-2"></i>Explore Cars
-      </a>
-      {% if not user.is_authenticated %}
-      <a href="{% url 'register' %}" class="btn btn-outline-glow btn-modern px-5 py-3">
-        <i class="bi bi-rocket-takeoff me-2"></i>Get Started
-      </a>
-      {% endif %}
+<section class="premium-hero">
+    <div class="hero-bg-glow"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-6 hero-content-col">
+                <h1 class="hero-title gsap-reveal">Rent the<br><span class="text-teal">Best Cars</span></h1>
+                <p class="hero-subtitle gsap-reveal mt-3">Fast booking. Flexible plans. Premium vehicles.</p>
+                
+                <!-- Inline Booking Form -->
+                <div class="booking-strip gsap-reveal mt-5">
+                    <form action="{% url 'rental_home' %}" method="GET" class="d-flex align-items-center flex-wrap gap-3">
+                        <div class="booking-field flex-grow-1">
+                            <label><i class="bi bi-geo-alt-fill text-teal me-2"></i>Destination</label>
+                            <input type="text" placeholder="City or Airport" class="booking-input">
+                        </div>
+                        <div class="booking-field">
+                            <label><i class="bi bi-calendar-event text-teal me-2"></i>Pickup Date</label>
+                            <input type="date" class="booking-input">
+                        </div>
+                        <div class="booking-field">
+                            <label><i class="bi bi-calendar-check text-teal me-2"></i>Drop-off Date</label>
+                            <input type="date" class="booking-input">
+                        </div>
+                        <button type="submit" class="btn btn-teal-pill px-4 py-3 h-100 mt-2 mt-md-0">
+                            Search <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 position-relative hero-car-col">
+                <img src="{% static 'car_images/carousel/car1.png' %}" alt="Premium Rentora Car" class="hero-car-img" id="heroCar">
+            </div>
+        </div>
     </div>
-  </div>
-
-  <!-- Animated gradient overlay -->
-  <div
-    style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.85) 50%, rgba(36, 36, 62, 0.9) 100%); z-index: 1;">
-  </div>
 </section>
 
-<!-- Why Choose Us Section -->
-<section class="py-5 mb-5">
-  <div class="container text-center">
-    <h2 class="mb-2" style="font-family: var(--font-display); font-weight: 700; color: var(--color-white);">
-      Why Drive In Style?
-    </h2>
-    <p class="mb-5" style="color: var(--color-gray-400); max-width: 600px; margin: 0 auto;">
-      We provide the best cars with top-notch services. Whether you want to buy or rent, we ensure a smooth experience.
-    </p>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon">
-            <i class="bi bi-speedometer2"></i>
-          </div>
-          <h5>High Performance</h5>
-          <p>Cars with the latest technology and top speed performance for the ultimate driving experience.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
-            <i class="bi bi-shield-check"></i>
-          </div>
-          <h5>Safety First</h5>
-          <p>We prioritize safety features to protect you and your loved ones on every journey.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="feature-card h-100">
-          <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
-            <i class="bi bi-wallet2"></i>
-          </div>
-          <h5>Affordable Options</h5>
-          <p>Flexible buying and renting options designed to perfectly suit your budget.</p>
-        </div>
-      </div>
+<!-- Brand Logos Strip -->
+<section class="brands-strip">
+    <div class="brands-track">
+        <div class="brand-item">Tesla</div>
+        <div class="brand-item">BMW</div>
+        <div class="brand-item">Mercedes</div>
+        <div class="brand-item">Audi</div>
+        <div class="brand-item">Porsche</div>
+        <div class="brand-item">Lexus</div>
+        <div class="brand-item">Honda</div>
+        <div class="brand-item">Hyundai</div>
+        <!-- Duplicate for infinite scroll effect (handled by CSS) -->
+        <div class="brand-item">Tesla</div>
+        <div class="brand-item">BMW</div>
+        <div class="brand-item">Mercedes</div>
+        <div class="brand-item">Audi</div>
+        <div class="brand-item">Porsche</div>
+        <div class="brand-item">Lexus</div>
+        <div class="brand-item">Honda</div>
+        <div class="brand-item">Hyundai</div>
     </div>
-  </div>
 </section>
 
-<!-- Carousel Section -->
-<section class="mb-5">
-  <div class="container">
-    <div id="carCarousel" class="carousel slide carousel-modern" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-          aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <img src="{% static 'car_images/carousel/car1.png' %}" class="d-block w-100" alt="Luxury Car 1"
-            style="height: 600px; object-fit: cover;">
-          <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-family: var(--font-display); font-weight: 700;">Premium Collection</h5>
-            <p>Discover our exclusive range of luxury vehicles</p>
-          </div>
+<!-- Popular Cars Section -->
+<section class="section-padding fleet-section bg-white text-dark">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5 gsap-fade-up">
+            <div>
+                <span class="text-teal fw-bold text-uppercase tracking-wider small mb-2 d-block">Our Fleet</span>
+                <h2 class="section-title text-dark">Our Popular Cars</h2>
+            </div>
+            <a href="{% url 'rental_home' %}" class="btn btn-outline-dark rounded-pill px-4">View All Fleet</a>
         </div>
-        <!-- Slide 2 -->
-        <div class="carousel-item">
-          <img src="{% static 'car_images/carousel/car2.png' %}" class="d-block w-100" alt="Luxury Car 2"
-            style="height: 600px; object-fit: cover;">
-          <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-family: var(--font-display); font-weight: 700;">Performance Driven</h5>
-            <p>Experience the power of modern engineering</p>
-          </div>
-        </div>
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <img src="{% static 'car_images/carousel/car3.png' %}" class="d-block w-100" alt="Luxury Car 3"
-            style="height: 600px; object-fit: cover;">
-          <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-family: var(--font-display); font-weight: 700;">Comfort & Style</h5>
-            <p>Where luxury meets everyday practicality</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Carousel Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+        <div class="row g-4">
+            <!-- Featured Car Card 1 -->
+            <div class="col-lg-4 col-md-6 gsap-fade-up">
+                <div class="premium-car-card">
+                    <div class="card-img-wrapper">
+                        <span class="category-tag">SUV</span>
+                        <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        <img src="{% static 'car_images/carousel/car2.png' %}" alt="Luxury SUV" class="car-img">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="car-name">Range Rover Evoque</h3>
+                        <div class="specs-row my-3">
+                            <div class="spec-item"><i class="bi bi-fuel-pump me-1"></i> Petrol</div>
+                            <div class="spec-item"><i class="bi bi-people me-1"></i> 5 Seats</div>
+                            <div class="spec-item"><i class="bi bi-gear-wide-connected me-1"></i> Auto</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div class="price-badge">
+                                <span class="amount">₹3,500</span><span class="period">/day</span>
+                            </div>
+                            <a href="{% url 'rental_home' %}" class="btn btn-teal-pill px-4">Rent Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Car Card 2 -->
+            <div class="col-lg-4 col-md-6 gsap-fade-up" style="transition-delay: 0.1s;">
+                <div class="premium-car-card">
+                    <div class="card-img-wrapper">
+                        <span class="category-tag">Sedan</span>
+                        <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        <img src="{% static 'car_images/carousel/car3.png' %}" alt="Luxury Sedan" class="car-img">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="car-name">BMW 5 Series</h3>
+                        <div class="specs-row my-3">
+                            <div class="spec-item"><i class="bi bi-fuel-pump me-1"></i> Diesel</div>
+                            <div class="spec-item"><i class="bi bi-people me-1"></i> 5 Seats</div>
+                            <div class="spec-item"><i class="bi bi-gear-wide-connected me-1"></i> Auto</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div class="price-badge">
+                                <span class="amount">₹4,200</span><span class="period">/day</span>
+                            </div>
+                            <a href="{% url 'rental_home' %}" class="btn btn-teal-pill px-4">Rent Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Car Card 3 -->
+            <div class="col-lg-4 col-md-6 gsap-fade-up" style="transition-delay: 0.2s;">
+                <div class="premium-car-card">
+                    <div class="card-img-wrapper">
+                        <span class="category-tag">Sports</span>
+                        <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        <img src="{% static 'car_images/carousel/car1.png' %}" alt="Sports Car" class="car-img">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="car-name">Porsche 911 Carrera</h3>
+                        <div class="specs-row my-3">
+                            <div class="spec-item"><i class="bi bi-fuel-pump me-1"></i> Petrol</div>
+                            <div class="spec-item"><i class="bi bi-people me-1"></i> 2 Seats</div>
+                            <div class="spec-item"><i class="bi bi-gear-wide-connected me-1"></i> Auto</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div class="price-badge">
+                                <span class="amount">₹12,000</span><span class="period">/day</span>
+                            </div>
+                            <a href="{% url 'rental_home' %}" class="btn btn-teal-pill px-4">Rent Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-5 mb-5">
-  <div class="container">
-    <div class="glass-card text-center py-5">
-      <h2 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--color-white);">
-        Ready to Start Your Journey?
-      </h2>
-      <p class="mb-4" style="color: var(--color-gray-400); max-width: 500px; margin: 0 auto;">
-        Whether you're looking to buy your dream car or rent one for a special occasion, we've got you covered.
-      </p>
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="{% url 'company' %}" class="btn btn-gradient-secondary btn-modern px-5 py-3">
-          <i class="bi bi-bag-check me-2"></i>Buy A Car
-        </a>
-        <a href="{% url 'rental_home' %}" class="btn btn-gradient-primary btn-modern px-5 py-3">
-          <i class="bi bi-key-fill me-2"></i>Rent A Car
-        </a>
-      </div>
+<!-- Exclusive Offer Banner -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row g-4 offers-row">
+            <div class="col-md-6 gsap-fade-right">
+                <div class="offer-card dark-offer">
+                    <span class="promo-label">Weekend Special</span>
+                    <h2>Get 20% Off on<br>Luxury Sedans</h2>
+                    <a href="{% url 'company' %}" class="btn btn-light rounded-pill mt-4">Explore More</a>
+                </div>
+            </div>
+            <div class="col-md-6 gsap-fade-left">
+                <div class="offer-card teal-offer">
+                    <span class="promo-label text-dark">New Arrivals</span>
+                    <h2 class="text-dark">Experience the<br>New Range Rover</h2>
+                    <a href="{% url 'rental_home' %}" class="btn btn-dark rounded-pill mt-4">Explore More</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- Stats Section -->
-<section class="py-5">
-  <div class="container">
-    <div class="row text-center g-4">
-      <div class="col-6 col-md-3">
-        <div class="glass p-4">
-          <h3
-            style="font-family: var(--font-display); font-weight: 800; color: var(--color-accent-cyan); font-size: 2.5rem;">
-            500+</h3>
-          <p class="mb-0" style="color: var(--color-gray-400);">Happy Customers</p>
+<!-- Features / Why Rentora -->
+<section class="section-padding bg-white">
+    <div class="container">
+        <div class="text-center mb-5 gsap-fade-up">
+            <span class="text-teal fw-bold text-uppercase tracking-wider small mb-2 d-block">Why Rentora</span>
+            <h2 class="section-title text-dark">Experience the Best</h2>
         </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="glass p-4">
-          <h3
-            style="font-family: var(--font-display); font-weight: 800; color: var(--color-accent-emerald); font-size: 2.5rem;">
-            100+</h3>
-          <p class="mb-0" style="color: var(--color-gray-400);">Premium Cars</p>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 gsap-fade-up" style="transition-delay: 0s;">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-phone"></i></div>
+                    <h4>Easy Booking</h4>
+                    <p>Book your dream car in less than 2 minutes with our streamlined process.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 gsap-fade-up" style="transition-delay: 0.1s;">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-headset"></i></div>
+                    <h4>24/7 Support</h4>
+                    <p>Our dedicated team is available around the clock for any assistance.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 gsap-fade-up" style="transition-delay: 0.2s;">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-calendar2-check"></i></div>
+                    <h4>Flexible Plans</h4>
+                    <p>Daily, weekly, or monthly rentals customized to fit your schedule.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 gsap-fade-up" style="transition-delay: 0.3s;">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-star"></i></div>
+                    <h4>Top Brands</h4>
+                    <p>A curated fleet of the world's most luxurious and reliable car brands.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="glass p-4">
-          <h3
-            style="font-family: var(--font-display); font-weight: 800; color: var(--color-accent-purple); font-size: 2.5rem;">
-            50+</h3>
-          <p class="mb-0" style="color: var(--color-gray-400);">Cities Covered</p>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="glass p-4">
-          <h3
-            style="font-family: var(--font-display); font-weight: 800; color: var(--color-accent-pink); font-size: 2.5rem;">
-            24/7</h3>
-          <p class="mb-0" style="color: var(--color-gray-400);">Support Available</p>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
+
+<!-- Advanced GSAP & Lenis Initialization -->
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animations
+        const heroTl = gsap.timeline();
+        heroTl.from(".gsap-reveal", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Parallax Hero Car
+        gsap.to("#heroCar", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".premium-hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // Scroll Animations for Elements
+        gsap.utils.toArray('.gsap-fade-up').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"  
+            });
+        });
+
+        gsap.utils.toArray('.gsap-fade-right').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                },
+                x: -50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        gsap.utils.toArray('.gsap-fade-left').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                },
+                x: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+    });
+</script>
 
 {% endblock %}
-
-{{ redirect_to_login_immediately }}

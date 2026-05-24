@@ -1,28 +1,37 @@
 from django.contrib import admin
-from carsapp.models import Company, Products, ProductInteriorImgs, ProductExteriorImgs,Book_Test_Drive
-# Register your models here.
+from .models import Company, Product, ProductInteriorImage, ProductExteriorImage, TestDriveBooking, Enquiry
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'ceo', 'est_year', 'origin'] 
-   
+    list_display = ['name', 'ceo', 'est_year', 'origin']
 
-class ProductsAdmin(admin.ModelAdmin):
-    list_display = ['product_name',"color","seat_capacity","fuel_type", "cc","milige",'Company',]  
-    
-class ProductInteriorImgsAdmin(admin.ModelAdmin):
-    list_display = ["interior",'product']
-    
-class ProductExteriorImgsAdmin(admin.ModelAdmin):
-    list_display = ["exterior",'product']
-   
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['product_name', 'color', 'seat_capacity', 'fuel_type', 'cc', 'mileage', 'company']
+
+
+class ProductInteriorImageAdmin(admin.ModelAdmin):
+    list_display = ['interior', 'product']
+
+
+class ProductExteriorImageAdmin(admin.ModelAdmin):
+    list_display = ['exterior', 'product']
+
+
+class TestDriveBookingAdmin(admin.ModelAdmin):
+    list_display = ['product', 'user', 'booking_date', 'time_slot']
+    list_filter = ['booking_date', 'time_slot']
+
+
+class EnquiryAdmin(admin.ModelAdmin):
+    list_display = ['user', 'phone', 'created_at']
+    list_filter = ['created_at']
+    search_fields = ['phone', 'message']
+
+
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Products, ProductsAdmin)
-admin.site.register(ProductInteriorImgs, ProductInteriorImgsAdmin)
-admin.site.register(ProductExteriorImgs, ProductExteriorImgsAdmin)
-admin.site.register(Book_Test_Drive)
-
-
-
-
-
+admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductInteriorImage, ProductInteriorImageAdmin)
+admin.site.register(ProductExteriorImage, ProductExteriorImageAdmin)
+admin.site.register(TestDriveBooking, TestDriveBookingAdmin)
+admin.site.register(Enquiry, EnquiryAdmin)

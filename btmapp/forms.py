@@ -4,7 +4,7 @@ from django_recaptcha.fields import ReCaptchaField
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .models import UserRegisteration
+from .models import UserRegistration
 
 
 class UserForm(forms.ModelForm):
@@ -92,10 +92,10 @@ class UserProfileForm(forms.ModelForm):
     captcha = ReCaptchaField()
     
     class Meta:
-        model = UserRegisteration
+        model = UserRegistration
         fields = ['phone', 'door_no', 'street', 'landmark', 'city', 'state', 'pincode', 'userpic']
         widgets = {
-            'phone': forms.NumberInput(attrs={
+            'phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '10-digit phone number',
                 'pattern': '[0-9]{10}',
@@ -140,7 +140,6 @@ class UserProfileForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Make all fields except phone and captcha optional
         optional_fields = ['door_no', 'street', 'landmark', 'city', 'state', 'pincode', 'userpic']
         for field in optional_fields:
             self.fields[field].required = False
@@ -150,8 +149,10 @@ class UserProfileForm(forms.ModelForm):
     def clean_phone(self):
         """Validate phone number"""
         phone = self.cleaned_data.get('phone')
-        if phone and len(str(phone)) != 10:
+        if phone and len(phone) != 10:
             raise ValidationError('Phone number must be exactly 10 digits.')
+        if phone and not phone.isdigit():
+            raise ValidationError('Phone number must contain only digits.')
         return phone
     
     def clean_pincode(self):
@@ -159,7 +160,7 @@ class UserProfileForm(forms.ModelForm):
         pincode = self.cleaned_data.get('pincode')
         if pincode and len(pincode) != 6:
             raise ValidationError('Pincode must be exactly 6 digits.')
-        if not pincode.isdigit():
+        if pincode and not pincode.isdigit():
             raise ValidationError('Pincode must contain only digits.')
         return pincode
     
@@ -167,11 +168,9 @@ class UserProfileForm(forms.ModelForm):
         """Validate uploaded image"""
         userpic = self.cleaned_data.get('userpic')
         if userpic:
-            # Check file size (limit to 5MB)
             if userpic.size > 5 * 1024 * 1024:
                 raise ValidationError('Image file size cannot exceed 5MB.')
             
-            # Check file type
             valid_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
             ext = userpic.name.lower().split('.')[-1]
             if f'.{ext}' not in valid_extensions:
@@ -182,7 +181,7 @@ class UserProfileForm(forms.ModelForm):
         return userpic
 
 
-class userUpdateForm(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
     """
     User account update form (username and email)
     """
@@ -193,7 +192,7 @@ class userUpdateForm(forms.ModelForm):
             'username': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Username',
-                'readonly': 'readonly'  # Username typically shouldn't change
+                'readonly': 'readonly'
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -203,7 +202,6 @@ class userUpdateForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Make username readonly by default
         self.fields['username'].disabled = True
     
     def clean_email(self):
@@ -219,14 +217,14 @@ class UserProfileUpdateForm(forms.ModelForm):
     User profile update form (without captcha for updates)
     """
     class Meta:
-        model = UserRegisteration
+        model = UserRegistration
         fields = ['phone', 'door_no', 'street', 'landmark', 'city', 'state', 'pincode', 'userpic']
         widgets = {
-            'phone': forms.NumberInput(attrs={
+            'phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '10-digit phone number'
             }),
-            'door_no': forms.NumberInput(attrs={
+            'door_no': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Door/House number'
             }),
@@ -260,7 +258,7 @@ class UserProfileUpdateForm(forms.ModelForm):
     def clean_phone(self):
         """Validate phone number"""
         phone = self.cleaned_data.get('phone')
-        if phone and len(str(phone)) != 10:
+        if phone and len(phone) != 10:
             raise ValidationError('Phone number must be exactly 10 digits.')
         return phone
     
@@ -274,61 +272,7 @@ class UserProfileUpdateForm(forms.ModelForm):
     def clean_userpic(self):
         """Validate uploaded image"""
         userpic = self.cleaned_data.get('userpic')
-        if userpic and hasattr(userpic, 'size'):  # New upload
+        if userpic and hasattr(userpic, 'size'):
             if userpic.size > 5 * 1024 * 1024:
                 raise ValidationError('Image file size cannot exceed 5MB.')
         return userpic
-
-
-class PasswordResetForm(forms.Form):
-    """
-    Password reset form with validation
-    
-    Note: For production, use Django's built-in password reset views
-    with email verification for better security.
-    """
-    username = forms.CharField(
-        max_length=150,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter your username',
-            'autocomplete': 'username'
-        })
-    )
-    password = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'New password',
-            'autocomplete': 'new-password'
-        }),
-        help_text='Password must be at least 8 characters long'
-    )
-    confirm_password = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirm new password',
-            'autocomplete': 'new-password'
-        })
-    )
-    
-    def clean_password(self):
-        """Validate password strength"""
-        password = self.cleaned_data.get('password')
-        try:
-            validate_password(password)
-        except ValidationError as e:
-            raise ValidationError(e.messages)
-        return password
-    
-    def clean(self):
-        """Validate that passwords match"""
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        confirm_password = cleaned_data.get('confirm_password')
-        
-        if password and confirm_password and password != confirm_password:
-            raise ValidationError('Passwords do not match.')
-        
-        return cleaned_data
